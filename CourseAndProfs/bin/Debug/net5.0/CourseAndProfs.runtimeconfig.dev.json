@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\vagmark\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\vagmark\\.nuget\\packages"
+    ]
+  }
+}
