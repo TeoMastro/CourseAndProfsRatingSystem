@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5D3Bi9X9j/Fp/NEv5L8OhUP97XEFZOsDyyhMF9l0oKPUWrfTkXcNg0P2NUnarqBH0Sh/vhukeCCXJ19qm18Bcg==",
+  "dgSpecHash": "a2E3VuR8qjN1cGNj3mfy+ZAQL7ojAFtjYAN+Ou29HBC0lKdG5NkGaGVy96Fp0L/hRlGsQIwqJIbNUOtGCEqA4w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfs\\CourseAndProfs\\CourseAndProfs.csproj",
+  "projectFilePath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfs\\CourseAndProfs.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vagmark\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\vagmark\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

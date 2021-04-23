@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfs\\CourseAndProfs\\CourseAndProfs.csproj": {}
+    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfs\\CourseAndProfs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfs\\CourseAndProfs\\CourseAndProfs.csproj": {
+    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfs\\CourseAndProfs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfs\\CourseAndProfs\\CourseAndProfs.csproj",
+        "projectUniqueName": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfs\\CourseAndProfs.csproj",
         "projectName": "CourseAndProfs",
-        "projectPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfs\\CourseAndProfs\\CourseAndProfs.csproj",
+        "projectPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfs\\CourseAndProfs.csproj",
         "packagesPath": "C:\\Users\\vagmark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfs\\CourseAndProfs\\obj\\",
+        "outputPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfs\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vagmark\\AppData\\Roaming\\NuGet\\NuGet.Config",
