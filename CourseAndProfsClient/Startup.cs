@@ -43,15 +43,17 @@ namespace CourseAndProfsClient
 {
   public class Startup
   {
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configuration, IWebHostEnvironment environment)
     {
       Configuration = configuration;
+      Environment = environment;
     }
 
     public IConfiguration Configuration { get; }
+    public IWebHostEnvironment Environment { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+    public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllersWithViews();
       services.AddSpaStaticFiles(configuration =>
@@ -62,30 +64,27 @@ namespace CourseAndProfsClient
       //services.AddSingleton<IPureMapper>(sp => new PureMapper(MappingConfiguration.Mapping));
 
       services.AddHttpContextAccessor();
-      services.AddSingleton<TimestampSaveChangesInterceptor>();
-      services.AddSingleton<AuditSaveChangesInterceptor<Guid>>();
+      //services.AddSingleton<TimestampSaveChangesInterceptor>();
+      //services.AddSingleton<AuditSaveChangesInterceptor<Guid>>();
 
 
       services.AddDbContextPool<CaPDbContext>((serviceProvider, options) =>
       {
         options.UseNpgsql(
             Configuration.GetConnectionString("CaP"))
-          .AddInterceptors(
-            serviceProvider.GetRequiredService<TimestampSaveChangesInterceptor>(),
-            serviceProvider.GetRequiredService<AuditSaveChangesInterceptor<Guid>>())
-          .EnableCommonOptions(env);
+          //.AddInterceptors(
+          //  serviceProvider.GetRequiredService<TimestampSaveChangesInterceptor>(),
+          //  serviceProvider.GetRequiredService<AuditSaveChangesInterceptor<Guid>>())
+          .EnableCommonOptions(Environment);
       });
 
       services.AddDatabaseDeveloperPageExceptionFilter();
       services.AddHostedService<MigrationService<CaPDbContext>>();
 
 
-
-
-
       services.AddIdentity<CaPUser, CaPRoles>(c =>
       {
-        var isDevelopment = env.IsDevelopment();
+        var isDevelopment = Environment.IsDevelopment();
         c.User.RequireUniqueEmail = !isDevelopment;
         c.Password = new PasswordOptions
         {
@@ -112,15 +111,6 @@ namespace CourseAndProfsClient
       services.AddRazorPages();
 
       services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
-
-      services.AddCors(options =>
-      {
-        options.AddPolicy("AllowAll",
-          builder =>
-          {
-            builder.AllowAnyOrigin();
-          });
-      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

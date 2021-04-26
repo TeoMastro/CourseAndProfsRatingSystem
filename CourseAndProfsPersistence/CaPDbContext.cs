@@ -33,35 +33,6 @@ namespace CourseAndProfsPersistence
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
-      builder.Entity<Course>()
-        .HasIndex(e => e.Name)
-        .IsTsVectorExpressionIndex("english");
-
-      builder.Entity<CourseType>()
-        .HasIndex(e => e.Name)
-        .IsTsVectorExpressionIndex("english");
-
-      builder.Entity<Department>()
-        .HasIndex(e => e.Name)
-        .IsTsVectorExpressionIndex("english");
-
-      builder.Entity<Professor>()
-        .HasIndex(e => e.FullName)
-        .IsTsVectorExpressionIndex("english");
-
-
-      builder.Entity<Review>(e =>
-      {
-        e.HasOne(rv => rv.Course)
-          .WithMany()
-          .HasForeignKey("CourseId")
-          .OnDelete(DeleteBehavior.Restrict);
-        e.HasOne(mv => mv.Professor)
-          .WithMany()
-          .HasForeignKey("ProfessorId")
-          .OnDelete(DeleteBehavior.Restrict);
-        e.HasKey("CourseId", "ProfessorId");
-      });
     }
   }
 }
