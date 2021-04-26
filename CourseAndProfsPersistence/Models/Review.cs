@@ -10,12 +10,12 @@ namespace CourseAndProfsPersistence.Models
 {
   public class Review : CaPEntity<long>
   {
-    public Course RevCourse { get; set; }
-    public Professor RevProfessor { get; set; }
-    public CaPUser RevUser { get; set; }
+    public Course Course { get; set; }
+    public Professor Professor { get; set; }
+    public CaPUser User { get; set; }
     public double UsersSubjectScore { get; set; }
-    public double RevRating { get; set; }
-    public string RevComments { get; set; }
+    public double Rating { get; set; }
+    public string Comments { get; set; }
 
   }
 }

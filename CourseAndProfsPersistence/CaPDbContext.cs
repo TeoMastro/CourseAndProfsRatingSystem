@@ -34,29 +34,29 @@ namespace CourseAndProfsPersistence
     {
       base.OnModelCreating(builder);
       builder.Entity<Course>()
-        .HasIndex(e => e.CourseName)
+        .HasIndex(e => e.Name)
         .IsTsVectorExpressionIndex("english");
 
       builder.Entity<CourseType>()
-        .HasIndex(e => e.CourseTypeName)
+        .HasIndex(e => e.Name)
         .IsTsVectorExpressionIndex("english");
 
       builder.Entity<Department>()
-        .HasIndex(e => e.DepName)
+        .HasIndex(e => e.Name)
         .IsTsVectorExpressionIndex("english");
 
       builder.Entity<Professor>()
-        .HasIndex(e => e.ProfFullName)
+        .HasIndex(e => e.FullName)
         .IsTsVectorExpressionIndex("english");
 
 
       builder.Entity<Review>(e =>
       {
-        e.HasOne(rv => rv.RevCourse)
+        e.HasOne(rv => rv.Course)
           .WithMany()
           .HasForeignKey("CourseId")
           .OnDelete(DeleteBehavior.Restrict);
-        e.HasOne(mv => mv.RevProfessor)
+        e.HasOne(mv => mv.Professor)
           .WithMany()
           .HasForeignKey("ProfessorId")
           .OnDelete(DeleteBehavior.Restrict);

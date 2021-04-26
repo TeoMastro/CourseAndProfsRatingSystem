@@ -9,6 +9,6 @@ namespace CourseAndProfsPersistence.Models
 {
   public class Department : CaPEntity<long>
   {
-    public string DepName { get; set; }
+    public string Name { get; set; }
   }
 }

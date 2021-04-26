@@ -1,0 +1,5 @@
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsPersistence\obj\Debug\net5.0\CourseAndProfsPersistence.csprojAssemblyReference.cache
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsPersistence\obj\Debug\net5.0\CourseAndProfsPersistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsPersistence\obj\Debug\net5.0\CourseAndProfsPersistence.AssemblyInfoInputs.cache
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsPersistence\obj\Debug\net5.0\CourseAndProfsPersistence.AssemblyInfo.cs
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsPersistence\obj\Debug\net5.0\CourseAndProfsPersistence.csproj.CoreCompileInputs.cache
