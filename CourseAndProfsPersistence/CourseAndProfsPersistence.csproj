@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Kritikos.Configuration.Peristence.IdentityServer" Version="1.1.1" />
     <PackageReference Include="Kritikos.Configuration.Persistence" Version="1.1.1" />
+    <PackageReference Include="Kritikos.PureMapper" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
