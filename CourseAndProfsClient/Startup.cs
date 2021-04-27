@@ -38,6 +38,7 @@ using System.Text;
 using CourseAndProfsPersistence.Identity;
 using CourseAndProfsPersistence;
 using System;
+using CourseAndProfsClient.Helpers;
 
 namespace CourseAndProfsClient
 {
@@ -55,13 +56,12 @@ namespace CourseAndProfsClient
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddSingleton<IPureMapper>(sp => new PureMapper(MappingConfiguration.Mapping));
       services.AddControllersWithViews();
       services.AddSpaStaticFiles(configuration =>
       {
         configuration.RootPath = "ClientApp/build";
       });
-
-      //services.AddSingleton<IPureMapper>(sp => new PureMapper(MappingConfiguration.Mapping));
 
       services.AddHttpContextAccessor();
       //services.AddSingleton<TimestampSaveChangesInterceptor>();
@@ -72,14 +72,38 @@ namespace CourseAndProfsClient
       {
         options.UseNpgsql(
             Configuration.GetConnectionString("CaP"))
-          //.AddInterceptors(
-          //  serviceProvider.GetRequiredService<TimestampSaveChangesInterceptor>(),
-          //  serviceProvider.GetRequiredService<AuditSaveChangesInterceptor<Guid>>())
           .EnableCommonOptions(Environment);
       });
 
       services.AddDatabaseDeveloperPageExceptionFilter();
       services.AddHostedService<MigrationService<CaPDbContext>>();
+
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseAndProfs.Web.Api", Version = "v1" });
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+          Name = "Authorization",
+          Type = SecuritySchemeType.ApiKey,
+          Scheme = "Bearer",
+          BearerFormat = "JWT",
+          In = ParameterLocation.Header,
+          Description =
+            "Enter 'Bearer' [space] and then your valid Token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+        });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+          {
+            new OpenApiSecurityScheme
+            {
+              Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer", },
+            },
+            Array.Empty<string>()
+          },
+        });
+        c.DescribeAllParametersInCamelCase();
+        c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+      });
 
 
       services.AddIdentity<CaPUser, CaPRoles>(c =>
@@ -116,9 +140,23 @@ namespace CourseAndProfsClient
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+      app.UseSwagger();
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+
+        app.UseMigrationsEndPoint();
+        app.UseSwaggerUI(c =>
+        {
+          c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseAndProfs.Web.Api v1");
+          c.DocumentTitle = "CourseAndProfs API";
+          c.DocExpansion(DocExpansion.None);
+          c.EnableDeepLinking();
+          c.EnableFilter();
+          c.EnableValidator();
+          c.DisplayOperationId();
+          c.DisplayRequestDuration();
+        });
       }
       else
       {
