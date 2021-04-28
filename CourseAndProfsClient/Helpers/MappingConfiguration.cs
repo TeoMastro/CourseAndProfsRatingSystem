@@ -21,7 +21,10 @@ namespace CourseAndProfsClient.Helpers
       .Map<AddCourseDto, Course>(mapper => addCourseDto => new Course() { Name=addCourseDto.Name })
       .Map<CourseType, CourseTypeDto>(mapper => courseType => new CourseTypeDto() { Id = courseType.Id, Name = courseType.Name })
       .Map<CourseTypeDto, CourseType>(mapper => courseTypeDto => new CourseType() { Id = courseTypeDto.Id, Name = courseTypeDto.Name })
-      .Map<AddCourseTypeDto, CourseType>(mapper => addCourseType => new CourseType() { Name = addCourseType.Name });
+      .Map<AddCourseTypeDto, CourseType>(mapper => addCourseTypeDto => new CourseType() { Name = addCourseTypeDto.Name })
+      .Map<Department, DepartmentDto>(mapper => department => new DepartmentDto() { Id = department.Id, Name = department.Name })
+      .Map<DepartmentDto, Department>(mapper => departmentDto => new Department() { Id = departmentDto.Id, Name = departmentDto.Name })
+      .Map<AddDepartmentDto, Department>(mapper => addDepartmentDto => new Department() { Name = addDepartmentDto.Name });
 
   }
 }

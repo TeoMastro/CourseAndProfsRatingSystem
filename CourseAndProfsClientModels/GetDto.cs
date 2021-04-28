@@ -9,4 +9,6 @@
   public record AddCourseDto(string Name);
 
   public record AddCourseTypeDto(string Name);
+
+  public record AddDepartmentDto(string Name);
 }
