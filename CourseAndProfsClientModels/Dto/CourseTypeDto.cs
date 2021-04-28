@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CourseAndProfsClientModels.Dto
 {
-  class CourseTypeDto
+  public class CourseTypeDto
   {
+    public long Id { get; set; }
+    public string Name { get; set; }
   }
 }

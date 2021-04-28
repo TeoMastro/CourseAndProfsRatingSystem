@@ -7,4 +7,6 @@
   public record AddProfessorDto(string FullName, string Mail, string Phone, string Office, string EOffice);
   
   public record AddCourseDto(string Name);
+
+  public record AddCourseTypeDto(string Name);
 }
