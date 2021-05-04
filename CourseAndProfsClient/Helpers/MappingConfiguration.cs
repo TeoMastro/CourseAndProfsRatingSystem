@@ -24,7 +24,8 @@ namespace CourseAndProfsClient.Helpers
       .Map<AddCourseTypeDto, CourseType>(mapper => addCourseTypeDto => new CourseType() { Name = addCourseTypeDto.Name })
       .Map<Department, DepartmentDto>(mapper => department => new DepartmentDto() { Id = department.Id, Name = department.Name })
       .Map<DepartmentDto, Department>(mapper => departmentDto => new Department() { Id = departmentDto.Id, Name = departmentDto.Name })
-      .Map<AddDepartmentDto, Department>(mapper => addDepartmentDto => new Department() { Name = addDepartmentDto.Name });
+      .Map<AddDepartmentDto, Department>(mapper => addDepartmentDto => new Department() { Name = addDepartmentDto.Name })
+      .Map<Review, ReviewDto>(mapper => review => new ReviewDto() {ReviewId = review.Id, UsersSubjectScore = review.UsersSubjectScore, Rating = review.Rating, Comments = review.Comments});
 
   }
 }
