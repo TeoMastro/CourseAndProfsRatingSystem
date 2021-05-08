@@ -16,5 +16,6 @@ namespace CourseAndProfsClientModels.Dto
     public string Office { get; set; }
     public string EOffice { get; set; }
     public Department Department { get; set; }
+    public double AverageRating { get; set; }
   }
 }
