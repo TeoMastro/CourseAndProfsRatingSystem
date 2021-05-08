@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Kritikos.Configuration.Peristence.IdentityServer" Version="1.1.1" />
+    <PackageReference Include="Kritikos.Extensions.Linq" Version="0.1.7" />
     <PackageReference Include="Kritikos.PureMapper" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.5" />
