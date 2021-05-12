@@ -4,11 +4,8 @@
   using System.ComponentModel;
   using System.ComponentModel.DataAnnotations;
 
-  public record AddProfessorDto(string FullName, string Mail, string Phone, string Office, string EOffice);
+  public record AddProfessorDto(string FullName, string Mail, string Phone, string Office, string EOffice, string Department);
   
-  public record AddCourseDto(string Name);
+  public record AddCourseDto(string Name, string Type);
 
-  public record AddCourseTypeDto(string Name);
-
-  public record AddDepartmentDto(string Name);
 }
