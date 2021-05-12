@@ -150,6 +150,7 @@
       professor.Phone = dto.Phone;
       professor.Office = dto.Office;
       professor.EOffice = dto.EOffice;
+      professor.Department = dto.Department;
 
       await Context.SaveChangesAsync();
       Logger.LogInformation(LogTemplates.Updated, nameof(Professor), professor);

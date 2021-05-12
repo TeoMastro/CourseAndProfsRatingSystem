@@ -146,6 +146,7 @@
       }
 
       course.Name = dto.Name;
+      course.Type = dto.Type;
 
       await Context.SaveChangesAsync();
       Logger.LogInformation(LogTemplates.Updated, nameof(Course), course);

@@ -166,5 +166,37 @@ namespace CourseAndProfsClient.Controllers
 
       return Ok("Review was added successufully");
     }
+
+    [HttpDelete("delete")]
+    public async Task<ActionResult> RemoveReview(long reviewId, CancellationToken token = default)
+    {
+      //var userId = RetrieveUserId().ToString();
+      //var user = await userManager.FindByIdAsync(userId);
+      //if (user == null)
+      //{
+      //  return BadRequest("Something went wrong.");
+      //}
+
+      var review =
+        await Context.Reviews
+          .Include(x => x.Professor.Reviews)
+          .SingleOrDefaultAsync(x => x.Id == reviewId); //&& x.User.Id == user.Id, token);
+      if (review == null)
+      {
+        return NotFound("No review found.");
+      }
+      double result = (review.Professor.Reviews.Where(x => x.Id != review.Id).Sum(x => x.Rating)) / (review.Professor.Reviews.Count - 1);
+      if (!double.IsFinite(result))
+      {
+        review.Professor.AverageRating = 0;
+      }
+      else
+      {
+        review.Professor.AverageRating = result;
+      }
+      Context.Reviews.Remove(review);
+      await Context.SaveChangesAsync(token);
+      return NoContent();
+    }
   }
 }
