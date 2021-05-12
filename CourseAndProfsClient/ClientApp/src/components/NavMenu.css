@@ -1,4 +1,7 @@
-﻿a.navbar-brand {
+﻿@import '~rc-easyui/dist/themes/default/easyui.css';
+@import '~rc-easyui/dist/themes/icon.css';
+@import '~rc-easyui/dist/themes/react.css';
+a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
