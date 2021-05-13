@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ButtonGroup } from 'rc-easyui';
+﻿import React, { Component } from 'react';
+import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ComboBox,ButtonGroup } from 'rc-easyui';
 
 
 export class Home extends React.Component {
@@ -11,7 +11,7 @@ export class Home extends React.Component {
             model: {},
             rules: {
                 'itemid': 'required',
-                'name': ['required', 'length[5,10]']
+                'review': 'required'
             },
             errors: {},
             title: '',
@@ -20,16 +20,27 @@ export class Home extends React.Component {
     }
     getData() {
         return [
-            { "code": "FI-SW-01", "name": "Koi", "unitcost": 10.00, "status": "P", "listprice": 36.50, "attr": "Large", "itemid": "EST-1" },
-            { "code": "K9-DL-01", "name": "Dalmation", "unitcost": 12.00, "status": "P", "listprice": 18.50, "attr": "Spotted Adult Female", "itemid": "EST-10" },
-            { "code": "RP-SN-01", "name": "Rattlesnake", "unitcost": 12.00, "status": "P", "listprice": 38.50, "attr": "Venomless", "itemid": "EST-11" },
-            { "code": "RP-SN-01", "name": "Rattlesnake", "unitcost": 12.00, "status": "P", "listprice": 26.50, "attr": "Rattleless", "itemid": "EST-12" },
-            { "code": "RP-LI-02", "name": "Iguana", "unitcost": 12.00, "status": "P", "listprice": 35.50, "attr": "Green Adult", "itemid": "EST-13" },
-            { "code": "FL-DSH-01", "name": "Manx", "unitcost": 12.00, "status": "P", "listprice": 158.50, "attr": "Tailless", "itemid": "EST-14" },
-            { "code": "FL-DSH-01", "name": "Manx", "unitcost": 12.00, "status": "P", "listprice": 83.50, "attr": "With tail", "itemid": "EST-15" },
-            { "code": "FL-DLH-02", "name": "Persian", "unitcost": 12.00, "status": "P", "listprice": 23.50, "attr": "Adult Female", "itemid": "EST-16" },
-            { "code": "FL-DLH-02", "name": "Persian", "unitcost": 12.00, "status": "P", "listprice": 89.50, "attr": "Adult Male", "itemid": "EST-17" },
-            { "code": "AV-CB-01", "name": "Amazon Parrot", "unitcost": 92.00, "status": "P", "listprice": 63.50, "attr": "Adult Male", "itemid": "EST-18" }
+            {
+                "id": 1,
+                "fullName": "Iliou Chi",
+                "mail": "mail@iliou.il",
+                "phone": "231233232",
+                "office": "e12",
+                "eOffice": "zooom",
+                "department": "Informatics",
+                "averageRating": 10
+            },
+            {
+              "id": 2,
+              "fullName": "Asdre",
+              "mail": "mail@azdre.az",
+              "phone": "2312323312",
+              "office": "e13",
+              "eOffice": "zoomAz123",
+              "department": "Informatics",
+              "averageRating": 0
+            }
+
         ]
     }
     getError(name) {
@@ -41,11 +52,10 @@ export class Home extends React.Component {
             ? errors[name][0]
             : null;
     }
-    editRow(row) {
+    addReview(row) {
         this.setState({
-            editingRow: row,
-            model: Object.assign({}, row),
-            title: 'Edit',
+            model: Object.assign({}),
+            title: 'Add',
             closed: false
         });
     }
@@ -62,6 +72,9 @@ export class Home extends React.Component {
                 })
             }
         })
+    }
+    clearValue() {
+        this.setState({ value: null })
     }
     deleteRow(row) {
         this.setState({
@@ -80,24 +93,55 @@ export class Home extends React.Component {
                         rules={rules}
                         onValidate={(errors) => this.setState({ errors: errors })}
                     >
-                        <div style={{ marginBottom: 10 }}>
-                            <Label htmlFor="itemid">Item ID:</Label>
-                            <TextBox inputId="itemid" name="itemid" value={row.itemid} style={{ width: 220 }}></TextBox>
-                            <div className="error">{this.getError('itemid')}</div>
+                        <div>
+                            <Label htmlFor="cProf" align="top">Select a Professor:</Label>
+                            <ComboBox
+                                inputId="cProf"
+                                iconCls="icon-man"
+                                editable={false}
+                                data={this.state.data}
+                                value={this.state.value}
+                                style={{ width: '100%' }}
+                                onChange={(value) => this.setState({ value: value })}
+                                addonRight={() => (
+                                    <span className="textbox-icon icon-clear" title="Clear value" onClick={this.state.value= null }></span>
+                                )}
+                            />
+                            <p>You selected: {this.state.value}</p>
                         </div>
-                        <div style={{ marginBottom: 10 }}>
-                            <Label htmlFor="name">Name:</Label>
-                            <TextBox inputId="name" name="name" value={row.name} style={{ width: 220 }}></TextBox>
-                            <div className="error">{this.getError('name')}</div>
+                        <div>
+                            <Label htmlFor="cCourse" align="top">Select a Course:</Label>
+                            <ComboBox
+                                inputId="cCourse"
+                                iconCls="icon-man"
+                                editable={false}
+                                data={this.state.data}
+                                value={this.state.value}
+                                style={{ width: '100%' }}
+                                onChange={(value) => this.setState({ value: value })}
+                                addonRight={() => (
+                                    <span className="textbox-icon icon-clear" title="Clear value" onClick={this.state.value = null}></span>
+                                )}
+                            />
+                            <p>You selected: {this.state.value}</p>
                         </div>
+
                         <div style={{ marginBottom: 10 }}>
-                            <Label htmlFor="listprice">List Price:</Label>
-                            <NumberBox inputId="listprice" name="listprice" value={row.listprice} precision={1} style={{ width: 220 }}></NumberBox>
+                            <Label htmlFor="tscore" style={{ width: 250 }}>Τι βαθμο πηρατε στο μαθημα;</Label>
+                            <TextBox inputId="tscore" name="tscore" value={row.name} style={{ width: 50 }}></TextBox>
                         </div>
+
                         <div style={{ marginBottom: 10 }}>
-                            <Label htmlFor="unitcost">Unit Cost:</Label>
-                            <NumberBox inputId="unitcost" name="unitcost" value={row.unitcost} style={{ width: 220 }}></NumberBox>
+                            <Label htmlFor="treview" style={{ width: 250 }}>Τι βαθμο βαζετε στον καθηγητη;</Label>
+                            <TextBox inputId="treview" name="treview" value={row.name} style={{ width: 50 }}></TextBox>
+                            <div className="error">{this.getError('review')}</div>
                         </div>
+
+                        <div style={{ marginBottom: 10 }}>
+                            <Label htmlFor="tcomments" align="top">Σχολια:</Label>
+                            <TextBox inputId="tcomments" multiline name="tcomments" value={row.name} style={{ width: '100%', height: 120  }}></TextBox>
+                        </div>
+
                     </Form>
                 </div>
                 <div className="dialog-button">
@@ -108,25 +152,21 @@ export class Home extends React.Component {
         )
     }
     render() {
+        const clearValue = () => {
+            this.setState({ value: null })
+        }
         return (
             <div>
-                <h2>Dialog Editing</h2>
-                <DataGrid data={this.state.data} style={{ height: 750 }}>
-                    <GridColumn field="itemid" title="Item ID"></GridColumn>
-                    <GridColumn field="name" title="Name"></GridColumn>
-                    <GridColumn field="listprice" title="List Price" align="right"></GridColumn>
-                    <GridColumn field="unitcost" title="Unit Cost" align="right"></GridColumn>
-                    <GridColumn field="status" title="Status" align="center"></GridColumn>
-                    <GridColumn field="act" title="Actions" align="center" width={110}
-                        render={({ row }) => (
-                            <div>
-                                <ButtonGroup>
-                                    <LinkButton onClick={() => this.editRow(row)}>Edit</LinkButton>
-                                    <LinkButton onClick={() => this.deleteRow(row)}>Delete</LinkButton>
-                                </ButtonGroup>
-                            </div>
-                        )}
-                    />
+                <h2>Professor's ratings</h2>
+                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
+                <DataGrid data={this.state.data} style={{ height: 550, padding:'15' }}>
+
+
+                    <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
+                    <GridColumn field="fullName" title="Name" align="center"></GridColumn>
+                    <GridColumn field="mail" title="Mail" align="center"></GridColumn>
+                    <GridColumn field="department" title="Department" align="center"></GridColumn>
+                    <GridColumn field="averageRating" title="Average rating" align="center"></GridColumn>
                 </DataGrid>
                 {this.renderDialog()}
             </div>
