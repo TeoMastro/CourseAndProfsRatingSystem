@@ -39,7 +39,7 @@ namespace CourseAndProfsClient.Controllers
       //  return BadRequest("Something went wrong.");
       //}
 
-      var reviewsQuery = Context.Professors.Where(x => x.AverageRating != -1).OrderBy(x => x.AverageRating);
+      var reviewsQuery = Context.Professors.Where(x => x.AverageRating != -1).OrderByDescending(x => x.AverageRating);
 
       if (reviewsQuery == null)
       {
