@@ -7,6 +7,7 @@
   using CourseAndProfsPersistence;
   using CourseAndProfsPersistence.Helpers;
   using CourseAndProfsPersistence.Models;
+  using CourseAndProfsPersistence.Joins;
   using Helpers;
   using CourseAndProfsClientModels;
   using CourseAndProfsClientModels.Dto;
@@ -87,6 +88,39 @@
     }
 
     /// <summary>
+    /// Returns an professor provided an ID.
+    /// </summary>
+    /// <param name="id">Professor's ID.</param>
+    /// <returns>One Professor's Courses.</returns>
+    /// <response code="400">Professor was not found.</response>
+    [HttpGet("professorscourses/{id}")]
+    public ActionResult<ProfessorDto> GetProfessorsCourses(long id)
+    {
+      var professor = Context.Professors.SingleOrDefault(x => x.Id == id);
+
+      if (professor == null)
+      {
+        Logger.LogWarning(LogTemplates.NotFound, nameof(Professor), id);
+        return NotFound($"No {nameof(Professor)} with Id {id} found in database");
+      }
+
+      var profcourses = Context.ProfessorCourses
+        .Include(p => p.Professor)
+        .Include(c => c.Course)
+        .Where(pr => pr.Professor.Id == professor.Id)
+        .Select(pc => pc.Course);
+
+      if (profcourses == null)
+      {
+        return NotFound($"No Courses found for profId {id} in database");
+      }
+
+      Logger.LogInformation(LogTemplates.RequestEntity, nameof(Professor), id);
+
+      return Ok(profcourses);
+    }
+
+    /// <summary>
     /// Adds an professor provided the necessary information.
     /// </summary>
     /// <param name="dto"></param>
@@ -102,6 +136,35 @@
       Logger.LogInformation(LogTemplates.CreatedEntity, nameof(Professor), professor);
 
       return CreatedAtAction(nameof(GetProfessor), new { id = professor.Id }, Mapper.Map<Professor, ProfessorDto>(professor));
+    }
+
+    /// <summary>
+    /// Adds an professor provided the necessary information.
+    /// </summary>
+    /// <param name="profId"></param>
+    /// <param name="courseId"></param> W
+    /// <response code="200">Added successfully.</response>
+    /// <response code="400">Professor was not found.</response>
+    [HttpPost("join")]
+    public async Task<ActionResult<ProfessorDto>> AddProfessorCourseJoin(long profId, long courseId)
+    {
+      var professor = Context.Professors.SingleOrDefault(x => x.Id == profId);
+      var course = Context.Courses.SingleOrDefault(x => x.Id == courseId);
+      if (professor == null)
+      {
+        return NotFound("Professor doesnt exist");
+      }
+      if (course == null)
+      {
+        return NotFound("Course doesnt exist");
+      }
+      ProfessorCourse professorCourse = new ProfessorCourse { Professor = professor, Course = course, };
+      Context.ProfessorCourses.Add(professorCourse);
+
+      await Context.SaveChangesAsync();
+      Logger.LogInformation(LogTemplates.CreatedEntity, nameof(Professor), professor);
+
+      return Ok("Added successfully");
     }
 
     /// <summary>
