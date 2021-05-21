@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CourseAndProfsPersistence.Helpers;
+using CourseAndProfsPersistence.Joins;
 
 namespace CourseAndProfsPersistence.Models
 {
@@ -17,6 +18,7 @@ namespace CourseAndProfsPersistence.Models
     public string Department { get; set; }
     public double AverageRating { get; set; }
     public IReadOnlyCollection<Review> Reviews { get; set; } = new List<Review>(0);
+    public IReadOnlyCollection<ProfessorCourse> ProfessorCourses { get; set; } = new List<ProfessorCourse>(0);
 
   }
 }
