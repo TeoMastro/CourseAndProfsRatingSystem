@@ -1,12 +1,18 @@
-﻿import React, { Component } from 'react';
-import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ComboBox,ButtonGroup } from 'rc-easyui';
+﻿import React, { Component, useState } from 'react';
+import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ComboBox, ButtonGroup } from 'rc-easyui';
+import axios from 'axios';
+import { data } from 'jquery';
 
 
 export class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.getData(),
+            data: this.getRatings(),
+            dataProfs: this.getProfessors(),
+            reviews: [],
+            professors: [],
+            professorIds: [],
             editingRow: null,
             model: {},
             rules: {
@@ -18,30 +24,21 @@ export class Home extends React.Component {
             closed: true
         }
     }
-    getData() {
-        return [
-            {
-                "id": 1,
-                "fullName": "Iliou Chi",
-                "mail": "mail@iliou.il",
-                "phone": "231233232",
-                "office": "e12",
-                "eOffice": "zooom",
-                "department": "Informatics",
-                "averageRating": 10
-            },
-            {
-              "id": 2,
-              "fullName": "Asdre",
-              "mail": "mail@azdre.az",
-              "phone": "2312323312",
-              "office": "e13",
-              "eOffice": "zoomAz123",
-              "department": "Informatics",
-              "averageRating": 0
-            }
-
-        ]
+    getRatings() {
+        axios.get(`https://${window.location.host}/AllProfessorsReviews?itemsPerPage=20&page=1`)
+            .then(res => {
+                const reviews = res.data.results;
+                this.setState({ reviews });
+            })
+    } 
+    getProfessors() {
+        axios.get(`https://${window.location.host}/api/professor?itemsPerPage=20&page=1`)
+            .then(res => {
+                const professors = res.data.results[0].fullName;
+                const professorIds = res.data.results;
+                console.log(res.data.results);
+                this.setState({ professors });
+            })
     }
     getError(name) {
         const { errors } = this.state;
@@ -84,6 +81,7 @@ export class Home extends React.Component {
     renderDialog() {
         const row = this.state.model;
         const { title, closed, rules } = this.state;
+
         return (
             <Dialog modal title={title} closed={closed} onClose={() => this.setState({ closed: true })}>
                 <div className="f-full" style={{ padding: '20px 50px' }}>
@@ -99,8 +97,8 @@ export class Home extends React.Component {
                                 inputId="cProf"
                                 iconCls="icon-man"
                                 editable={false}
-                                data={this.state.data}
-                                value={this.state.value}
+                                data={this.state.dataProfs}
+                                value={this.state.professors}
                                 style={{ width: '100%' }}
                                 onChange={(value) => this.setState({ value: value })}
                                 addonRight={() => (
@@ -159,7 +157,7 @@ export class Home extends React.Component {
             <div>
                 <h2>Professor's ratings</h2>
                 <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
-                <DataGrid data={this.state.data} style={{ height: 550, padding:'15' }}>
+                <DataGrid data={this.state.reviews} style={{ height: 550, padding: '15' }}>
 
 
                     <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
