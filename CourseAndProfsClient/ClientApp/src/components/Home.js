@@ -13,6 +13,7 @@ export class Home extends React.Component {
             reviews: [],
             selectValueProf: '',
             selectGrade: '',
+            selectValueProfId: '',
             selectRating: '',
             selectComments: '',
             professors: [],
@@ -53,13 +54,9 @@ export class Home extends React.Component {
     getProfessors() {
         axios.get(`https://${window.location.host}/api/professor?itemsPerPage=20&page=1`)
             .then(res => {
-                let idx = 0;
-                const professors = [];
-                res.data.results.map(obj => {
-                    professors[idx] = obj.fullName;
-                    idx++;
-                })
+                const professors = res.data.results;
                 this.setState({ professors });
+                console.log(professors);
             })
     }
     submitReview() {
@@ -122,9 +119,8 @@ export class Home extends React.Component {
                         <div>
                             <Label htmlFor="cProf" align="top">Select a Professor:</Label>
                             <select value={this.state.selectValueProf} onChange={this.handleChangeProf}>
-                                {professors.map(professor => <option>{professor}</option>)}
+                                {professors.map(professor => <option value={professor.id}>{professor.fullName}</option>)}
                             </select>
-                            <p>You selected: {this.state.selectValueProf}</p>
                         </div>
                         <div>
                             <Label htmlFor="cCourse" align="top">Select a Course:</Label>
