@@ -12,7 +12,6 @@ export class Home extends React.Component {
             dataProfs: this.getProfessors(),
             reviews: [],
             professors: [],
-            professorIds: [],
             editingRow: null,
             model: {},
             rules: {
@@ -29,14 +28,19 @@ export class Home extends React.Component {
             .then(res => {
                 const reviews = res.data.results;
                 this.setState({ reviews });
+                console.log(res.data.results);
             })
     } 
     getProfessors() {
         axios.get(`https://${window.location.host}/api/professor?itemsPerPage=20&page=1`)
             .then(res => {
-                const professors = res.data.results[0].fullName;
-                const professorIds = res.data.results;
-                console.log(res.data.results);
+                let idx = 0;
+                const professors = [];
+                res.data.results.map(obj => {
+                    professors[idx] = obj.fullName;
+                    idx++;
+                })
+                console.log(professors);
                 this.setState({ professors });
             })
     }
@@ -81,7 +85,7 @@ export class Home extends React.Component {
     renderDialog() {
         const row = this.state.model;
         const { title, closed, rules } = this.state;
-
+        let professors = this.state.professors;
         return (
             <Dialog modal title={title} closed={closed} onClose={() => this.setState({ closed: true })}>
                 <div className="f-full" style={{ padding: '20px 50px' }}>
@@ -93,19 +97,10 @@ export class Home extends React.Component {
                     >
                         <div>
                             <Label htmlFor="cProf" align="top">Select a Professor:</Label>
-                            <ComboBox
-                                inputId="cProf"
-                                iconCls="icon-man"
-                                editable={false}
-                                data={this.state.dataProfs}
-                                value={this.state.professors}
-                                style={{ width: '100%' }}
-                                onChange={(value) => this.setState({ value: value })}
-                                addonRight={() => (
-                                    <span className="textbox-icon icon-clear" title="Clear value" onClick={this.state.value= null }></span>
-                                )}
-                            />
-                            <p>You selected: {this.state.value}</p>
+                            <select>
+                                {professors.map(professor => <option>{professor}</option>)}
+                            </select>
+                            <p>You selected: {this.state.professors}</p>
                         </div>
                         <div>
                             <Label htmlFor="cCourse" align="top">Select a Course:</Label>
@@ -117,9 +112,6 @@ export class Home extends React.Component {
                                 value={this.state.value}
                                 style={{ width: '100%' }}
                                 onChange={(value) => this.setState({ value: value })}
-                                addonRight={() => (
-                                    <span className="textbox-icon icon-clear" title="Clear value" onClick={this.state.value = null}></span>
-                                )}
                             />
                             <p>You selected: {this.state.value}</p>
                         </div>
@@ -156,10 +148,7 @@ export class Home extends React.Component {
         return (
             <div>
                 <h2>Professor's ratings</h2>
-                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
                 <DataGrid data={this.state.reviews} style={{ height: 550, padding: '15' }}>
-
-
                     <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
                     <GridColumn field="fullName" title="Name" align="center"></GridColumn>
                     <GridColumn field="mail" title="Mail" align="center"></GridColumn>
@@ -167,6 +156,7 @@ export class Home extends React.Component {
                     <GridColumn field="averageRating" title="Average rating" align="center"></GridColumn>
                 </DataGrid>
                 {this.renderDialog()}
+                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
             </div>
         );
     }
