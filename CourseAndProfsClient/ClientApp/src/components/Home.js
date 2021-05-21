@@ -9,7 +9,9 @@ export class Home extends React.Component {
         super(props);
         this.state = {
             data: this.getRatings(),
+            selectValueProf: '',
             dataProfs: this.getProfessors(),
+            dataCourse: this.getCourses(),
             reviews: [],
             selectValueProf: '',
             selectGrade: '',
@@ -28,12 +30,16 @@ export class Home extends React.Component {
             closed: true
         }
         this.handleChangeProf = this.handleChangeProf.bind(this);
+        this.handleChangeCourse = this.handleChangeCourse.bind(this);
         this.handleChangeGrade = this.handleChangeGrade.bind(this);
         this.handleChangeRating = this.handleChangeRating.bind(this);
         this.handleChangeComments = this.handleChangeComments.bind(this);
     }
     handleChangeProf(e) {
         this.setState({ selectValueProf: e.target.value });
+    }
+    handleChangeCourse(e) {
+        this.setState({ selectValueCourse: e.target.value });
     }
     handleChangeGrade(e) {
         this.setState({ selectGrade: e.target.value });
@@ -50,13 +56,21 @@ export class Home extends React.Component {
                 const reviews = res.data.results;
                 this.setState({ reviews });
             })
-    } 
+    }
     getProfessors() {
         axios.get(`https://${window.location.host}/api/professor?itemsPerPage=20&page=1`)
             .then(res => {
                 const professors = res.data.results;
                 this.setState({ professors });
                 console.log(professors);
+            })
+    }
+    async getCourses(arg) {
+        axios.get({ method: 'get', url: `https://${window.location.host}/api/professor/professorscourses/`, data: { "profId": arg }})
+            .then(res => {
+                const courses = res.data.results;
+                this.setState({ courses });
+                console.log(courses);
             })
     }
     submitReview() {
@@ -107,6 +121,7 @@ export class Home extends React.Component {
         const row = this.state.model;
         const { title, closed, rules } = this.state;
         let professors = this.state.professors;
+        let courses = this.state.courses;
         return (
             <Dialog modal title={title} closed={closed} onClose={() => this.setState({ closed: true })}>
                 <div className="f-full" style={{ padding: '20px 50px' }}>
@@ -124,17 +139,23 @@ export class Home extends React.Component {
                         </div>
                         <div>
                             <Label htmlFor="cCourse" align="top">Select a Course:</Label>
-                            <ComboBox
-                                inputId="cCourse"
-                                iconCls="icon-man"
-                                editable={false}
-                                data={this.state.data}
-                                value={this.state.value}
-                                style={{ width: '100%' }}
-                                onChange={(value) => this.setState({ value: value })}
-                            />
-                            <p>You selected: {this.state.value}</p>
+                            <select value={this.state.selectValueCourse} onChange={this.handleChangeCourse}>
+                                {courses.map(course => <option value={course.id}>{course.name}</option>)}
+                            </select>
                         </div>
+                        {/*<div>*/}
+                        {/*    <Label htmlFor="cCourse" align="top">Select a Course:</Label>*/}
+                        {/*    <ComboBox*/}
+                        {/*        inputId="cCourse"*/}
+                        {/*        iconCls="icon-man"*/}
+                        {/*        editable={false}*/}
+                        {/*        data={this.state.data}*/}
+                        {/*        value={this.state.value}*/}
+                        {/*        style={{ width: '100%' }}*/}
+                        {/*        onChange={(value) => this.setState({ value: value })}*/}
+                        {/*    />*/}
+                        {/*    <p>You selected: {this.state.value}</p>*/}
+                        {/*</div>*/}
 
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="tscore" style={{ width: 250 }}>Τι βαθμο πηρατε στο μαθημα;</Label>
