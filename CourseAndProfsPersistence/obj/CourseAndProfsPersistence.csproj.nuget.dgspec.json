@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {}
+    "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
+    "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
+        "projectUniqueName": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
         "projectName": "CourseAndProfsPersistence",
-        "projectPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
-        "packagesPath": "C:\\Users\\vagmark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\obj\\",
+        "projectPath": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
+        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vagmark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

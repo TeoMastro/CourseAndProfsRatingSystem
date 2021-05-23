@@ -1,12 +1,25 @@
-﻿import React, { Component } from 'react';
-import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ComboBox,ButtonGroup } from 'rc-easyui';
+﻿import React, { Component, useState } from 'react';
+import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ComboBox, ButtonGroup } from 'rc-easyui';
+import axios from 'axios';
+import { data } from 'jquery';
 
 
 export class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.getData(),
+            data: this.getRatings(),
+            dataProfs: this.getProfessors(),
+            //dataCourse: this.getCourses(),
+            reviews: [],
+            selectValueProf: 0,
+            selectValueCourse: 0,
+            selectGrade: '',
+            selectValueProfId: '',
+            selectRating: '',
+            selectComments: '',
+            professors: [],
+            courses: [],
             editingRow: null,
             model: {},
             rules: {
@@ -17,31 +30,78 @@ export class Home extends React.Component {
             title: '',
             closed: true
         }
+        this.handleChangeProf = this.handleChangeProf.bind(this);
+        this.handleChangeCourse = this.handleChangeCourse.bind(this);
+        this.handleChangeGrade = this.handleChangeGrade.bind(this);
+        this.handleChangeRating = this.handleChangeRating.bind(this);
+        this.handleChangeComments = this.handleChangeComments.bind(this);
     }
-    getData() {
-        return [
-            {
-                "id": 1,
-                "fullName": "Iliou Chi",
-                "mail": "mail@iliou.il",
-                "phone": "231233232",
-                "office": "e12",
-                "eOffice": "zooom",
-                "department": "Informatics",
-                "averageRating": 10
-            },
-            {
-              "id": 2,
-              "fullName": "Asdre",
-              "mail": "mail@azdre.az",
-              "phone": "2312323312",
-              "office": "e13",
-              "eOffice": "zoomAz123",
-              "department": "Informatics",
-              "averageRating": 0
-            }
-
-        ]
+    handleChangeProf(e) {
+        this.setState({ selectValueProf: e.target.value });
+        this.getCourses(e.target.value);
+    }
+    handleChangeCourse(e) {
+        this.setState({ selectValueCourse: e.target.value });
+    }
+    handleChangeGrade(e) {
+        let isnum = /^\d+$/.test(e.target.value);
+        if (isnum) {
+            this.setState({ selectGrade: e.target.value });
+        }
+        else {
+            window.alert("Give digits only");
+        }
+    }
+    handleChangeRating(e) {
+        let isnum = /^\d+$/.test(e.target.value);
+        if (isnum) {
+            this.setState({ selectRating: e.target.value });
+        }
+        else {
+            window.alert("Give digits only");
+        }
+    }
+    handleChangeComments(e) {
+        this.setState({ selectComments: e.target.value });
+    }
+    getRatings() {
+        axios.get(`https://${window.location.host}/AllProfessorsReviews?itemsPerPage=20&page=1`)
+            .then(res => {
+                const reviews = res.data.results;
+                this.setState({ reviews });
+            })
+    }
+    getProfessors() {
+        axios.get(`https://${window.location.host}/api/professor?itemsPerPage=20&page=1`)
+            .then(res => {
+                const professors = res.data.results;
+                this.setState({ professors });
+                //console.log(professors);
+            })
+    }
+    getCourses(arg) {
+        axios.get(`https://${window.location.host}/api/professor/professorscourses/${arg}`)
+            .then(res => {
+                const courses = res.data;
+                this.setState({ courses });
+                //console.log(courses);
+            })
+    }
+    submitReview() {
+        const course = parseInt(this.state.selectValueCourse);
+        const prof = parseInt(this.state.selectValueProf);
+        const grade = parseInt(this.state.selectGrade);
+        const rating = parseInt(this.state.selectRating);
+        const comments = this.state.selectComments;
+        if (course == 0 || prof == 0 || grade > 10 || grade < 0 || rating > 10 || rating < 0) {
+            window.alert("Check the fields");
+        } else {
+            axios.post(`https://${window.location.host}/Add?courseId=${course}&professorId=${prof}&usersSubjectScore=${grade}&rating=${rating}&comments=${comments}`)
+                .then(res => {
+                    window.alert(res.data);
+                })
+            this.getRatings();
+        }
     }
     getError(name) {
         const { errors } = this.state;
@@ -84,8 +144,10 @@ export class Home extends React.Component {
     renderDialog() {
         const row = this.state.model;
         const { title, closed, rules } = this.state;
+        let professors = this.state.professors;
+        let courses = this.state.courses;
         return (
-            <Dialog modal title={title} closed={closed} onClose={() => this.setState({ closed: true })}>
+            <Dialog modal title={title} closed={closed} onClose={() => { this.setState({ closed: true }); this.getRatings() }}>
                 <div className="f-full" style={{ padding: '20px 50px' }}>
                     <Form className="f-full"
                         ref={ref => this.form = ref}
@@ -95,58 +157,53 @@ export class Home extends React.Component {
                     >
                         <div>
                             <Label htmlFor="cProf" align="top">Select a Professor:</Label>
-                            <ComboBox
-                                inputId="cProf"
-                                iconCls="icon-man"
-                                editable={false}
-                                data={this.state.data}
-                                value={this.state.value}
-                                style={{ width: '100%' }}
-                                onChange={(value) => this.setState({ value: value })}
-                                addonRight={() => (
-                                    <span className="textbox-icon icon-clear" title="Clear value" onClick={this.state.value= null }></span>
-                                )}
-                            />
-                            <p>You selected: {this.state.value}</p>
+                            <select value={this.state.selectValueProf} onChange={this.handleChangeProf}>
+                                <option value={0}>SELECT</option>
+                                {professors.map(professor => <option value={professor.id}>{professor.fullName}</option>)}
+                            </select>
                         </div>
                         <div>
                             <Label htmlFor="cCourse" align="top">Select a Course:</Label>
-                            <ComboBox
-                                inputId="cCourse"
-                                iconCls="icon-man"
-                                editable={false}
-                                data={this.state.data}
-                                value={this.state.value}
-                                style={{ width: '100%' }}
-                                onChange={(value) => this.setState({ value: value })}
-                                addonRight={() => (
-                                    <span className="textbox-icon icon-clear" title="Clear value" onClick={this.state.value = null}></span>
-                                )}
-                            />
-                            <p>You selected: {this.state.value}</p>
+                            <select value={this.state.selectValueCourse} onChange={this.handleChangeCourse}>
+                                <option value={0}>SELECT</option>
+                                {courses.map(course => <option value={course.id}>{course.name}</option>)}
+                            </select>
                         </div>
+                        {/*<div>*/}
+                        {/*    <Label htmlFor="cCourse" align="top">Select a Course:</Label>*/}
+                        {/*    <ComboBox*/}
+                        {/*        inputId="cCourse"*/}
+                        {/*        iconCls="icon-man"*/}
+                        {/*        editable={false}*/}
+                        {/*        data={this.state.data}*/}
+                        {/*        value={this.state.value}*/}
+                        {/*        style={{ width: '100%' }}*/}
+                        {/*        onChange={(value) => this.setState({ value: value })}*/}
+                        {/*    />*/}
+                        {/*    <p>You selected: {this.state.value}</p>*/}
+                        {/*</div>*/}
 
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="tscore" style={{ width: 250 }}>Τι βαθμο πηρατε στο μαθημα;</Label>
-                            <TextBox inputId="tscore" name="tscore" value={row.name} style={{ width: 50 }}></TextBox>
+                            <input value={this.state.selectGrade} onChange={this.handleChangeGrade} style={{ width: 50 }}></input>
                         </div>
 
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="treview" style={{ width: 250 }}>Τι βαθμο βαζετε στον καθηγητη;</Label>
-                            <TextBox inputId="treview" name="treview" value={row.name} style={{ width: 50 }}></TextBox>
+                            <input value={this.state.selectRating} onChange={this.handleChangeRating} style={{ width: 50 }}></input>
                             <div className="error">{this.getError('review')}</div>
                         </div>
 
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="tcomments" align="top">Σχολια:</Label>
-                            <TextBox inputId="tcomments" multiline name="tcomments" value={row.name} style={{ width: '100%', height: 120  }}></TextBox>
+                            <textarea value={this.state.selectComments} onChange={this.handleChangeComments} style={{ width: '100%', height: 120 }}></textarea>
                         </div>
 
                     </Form>
                 </div>
                 <div className="dialog-button">
-                    <LinkButton style={{ width: 80 }} onClick={() => this.saveRow()}>Save</LinkButton>
-                    <LinkButton style={{ width: 80 }} onClick={() => this.setState({ closed: true })}>Close</LinkButton>
+                    <LinkButton style={{ width: 80 }} onClick={() => this.submitReview()}>Save</LinkButton>
+                    <LinkButton style={{ width: 80 }} onClick={() => { this.setState({ closed: true }); this.getRatings() }}>Close</LinkButton>
                 </div>
             </Dialog>
         )
@@ -158,10 +215,7 @@ export class Home extends React.Component {
         return (
             <div>
                 <h2>Professor's ratings</h2>
-                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
-                <DataGrid data={this.state.data} style={{ height: 550, padding:'15' }}>
-
-
+                <DataGrid data={this.state.reviews} style={{ height: 550, padding: '15' }}>
                     <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
                     <GridColumn field="fullName" title="Name" align="center"></GridColumn>
                     <GridColumn field="mail" title="Mail" align="center"></GridColumn>
@@ -169,6 +223,7 @@ export class Home extends React.Component {
                     <GridColumn field="averageRating" title="Average rating" align="center"></GridColumn>
                 </DataGrid>
                 {this.renderDialog()}
+                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
             </div>
         );
     }

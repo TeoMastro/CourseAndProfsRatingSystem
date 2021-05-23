@@ -24,6 +24,10 @@ Bin/
 obj/
 Obj/
 
+.dtbcashe.v2
+.suo
+v16
+
 # Visual Studio 2015 cache/options directory
 .vs/
 /wwwroot/dist/
