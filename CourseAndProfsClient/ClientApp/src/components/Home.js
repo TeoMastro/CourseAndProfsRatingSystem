@@ -1,9 +1,6 @@
 ﻿import React, { Component, useState } from 'react';
 import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ComboBox, ButtonGroup } from 'rc-easyui';
 import axios from 'axios';
-import { data } from 'jquery';
-
-
 export class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -76,15 +73,13 @@ export class Home extends React.Component {
             .then(res => {
                 const professors = res.data.results;
                 this.setState({ professors });
-                //console.log(professors);
             })
     }
     getCourses(arg) {
         axios.get(`https://${window.location.host}/api/professor/professorscourses/${arg}`)
             .then(res => {
-                const courses = res.data;
+                const courses = res.data.results;
                 this.setState({ courses });
-                //console.log(courses);
             })
     }
     submitReview() {
@@ -153,8 +148,7 @@ export class Home extends React.Component {
                         ref={ref => this.form = ref}
                         model={row}
                         rules={rules}
-                        onValidate={(errors) => this.setState({ errors: errors })}
-                    >
+                        onValidate={(errors) => this.setState({ errors: errors })}>
                         <div>
                             <Label htmlFor="cProf" align="top">Select a Professor:</Label>
                             <select value={this.state.selectValueProf} onChange={this.handleChangeProf}>
@@ -166,7 +160,7 @@ export class Home extends React.Component {
                             <Label htmlFor="cCourse" align="top">Select a Course:</Label>
                             <select value={this.state.selectValueCourse} onChange={this.handleChangeCourse}>
                                 <option value={0}>SELECT</option>
-                                {courses.map(course => <option value={course.id}>{course.name}</option>)}
+                                {/*courses.map(course => <option value={course.id}>{course.name}</option>)*/}
                             </select>
                         </div>
                         {/*<div>*/}
@@ -182,23 +176,19 @@ export class Home extends React.Component {
                         {/*    />*/}
                         {/*    <p>You selected: {this.state.value}</p>*/}
                         {/*</div>*/}
-
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="tscore" style={{ width: 250 }}>Τι βαθμο πηρατε στο μαθημα;</Label>
                             <input value={this.state.selectGrade} onChange={this.handleChangeGrade} style={{ width: 50 }}></input>
                         </div>
-
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="treview" style={{ width: 250 }}>Τι βαθμο βαζετε στον καθηγητη;</Label>
                             <input value={this.state.selectRating} onChange={this.handleChangeRating} style={{ width: 50 }}></input>
                             <div className="error">{this.getError('review')}</div>
                         </div>
-
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="tcomments" align="top">Σχολια:</Label>
                             <textarea value={this.state.selectComments} onChange={this.handleChangeComments} style={{ width: '100%', height: 120 }}></textarea>
                         </div>
-
                     </Form>
                 </div>
                 <div className="dialog-button">
@@ -214,7 +204,7 @@ export class Home extends React.Component {
         }
         return (
             <div>
-                <h2>Professor's ratings</h2>
+                <h2>Professor's reviews</h2>
                 <DataGrid data={this.state.reviews} style={{ height: 550, padding: '15' }}>
                     <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
                     <GridColumn field="fullName" title="Name" align="center"></GridColumn>
@@ -228,5 +218,4 @@ export class Home extends React.Component {
         );
     }
 }
-
 export default Home;
