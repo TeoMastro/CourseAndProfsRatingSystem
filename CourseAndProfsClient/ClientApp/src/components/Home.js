@@ -9,16 +9,17 @@ export class Home extends React.Component {
         super(props);
         this.state = {
             data: this.getRatings(),
-            selectValueProf: '',
             dataProfs: this.getProfessors(),
-            dataCourse: this.getCourses(),
+            //dataCourse: this.getCourses(),
             reviews: [],
-            selectValueProf: '',
+            selectValueProf: 0,
+            selectValueCourse: 0,
             selectGrade: '',
             selectValueProfId: '',
             selectRating: '',
             selectComments: '',
             professors: [],
+            courses: [],
             editingRow: null,
             model: {},
             rules: {
@@ -37,15 +38,28 @@ export class Home extends React.Component {
     }
     handleChangeProf(e) {
         this.setState({ selectValueProf: e.target.value });
+        this.getCourses(e.target.value);
     }
     handleChangeCourse(e) {
         this.setState({ selectValueCourse: e.target.value });
     }
     handleChangeGrade(e) {
-        this.setState({ selectGrade: e.target.value });
+        let isnum = /^\d+$/.test(e.target.value);
+        if (isnum) {
+            this.setState({ selectGrade: e.target.value });
+        }
+        else {
+            window.alert("Give digits only");
+        }
     }
     handleChangeRating(e) {
-        this.setState({ selectRating: e.target.value });
+        let isnum = /^\d+$/.test(e.target.value);
+        if (isnum) {
+            this.setState({ selectRating: e.target.value });
+        }
+        else {
+            window.alert("Give digits only");
+        }
     }
     handleChangeComments(e) {
         this.setState({ selectComments: e.target.value });
@@ -62,22 +76,32 @@ export class Home extends React.Component {
             .then(res => {
                 const professors = res.data.results;
                 this.setState({ professors });
-                console.log(professors);
+                //console.log(professors);
             })
     }
-    async getCourses(arg) {
-        axios.get({ method: 'get', url: `https://${window.location.host}/api/professor/professorscourses/`, data: { "profId": arg }})
+    getCourses(arg) {
+        axios.get(`https://${window.location.host}/api/professor/professorscourses/${arg}`)
             .then(res => {
-                const courses = res.data.results;
+                const courses = res.data;
                 this.setState({ courses });
-                console.log(courses);
+                //console.log(courses);
             })
     }
     submitReview() {
-        console.log(this.state.selectValueProf); //gia kapoio logo de pairnei default value
-        console.log(this.state.selectGrade); //thelei elegxo gia to an auta ta 2 states einai numbers.
-        console.log(this.state.selectRating);
-        console.log(this.state.selectComments);
+        const course = parseInt(this.state.selectValueCourse);
+        const prof = parseInt(this.state.selectValueProf);
+        const grade = parseInt(this.state.selectGrade);
+        const rating = parseInt(this.state.selectRating);
+        const comments = this.state.selectComments;
+        if (course == 0 || prof == 0 || grade > 10 || grade < 0 || rating > 10 || rating < 0) {
+            window.alert("Check the fields");
+        } else {
+            axios.post(`https://${window.location.host}/Add?courseId=${course}&professorId=${prof}&usersSubjectScore=${grade}&rating=${rating}&comments=${comments}`)
+                .then(res => {
+                    window.alert(res.data);
+                })
+            this.getRatings();
+        }
     }
     getError(name) {
         const { errors } = this.state;
@@ -123,7 +147,7 @@ export class Home extends React.Component {
         let professors = this.state.professors;
         let courses = this.state.courses;
         return (
-            <Dialog modal title={title} closed={closed} onClose={() => this.setState({ closed: true })}>
+            <Dialog modal title={title} closed={closed} onClose={() => { this.setState({ closed: true }); this.getRatings() }}>
                 <div className="f-full" style={{ padding: '20px 50px' }}>
                     <Form className="f-full"
                         ref={ref => this.form = ref}
@@ -134,12 +158,14 @@ export class Home extends React.Component {
                         <div>
                             <Label htmlFor="cProf" align="top">Select a Professor:</Label>
                             <select value={this.state.selectValueProf} onChange={this.handleChangeProf}>
+                                <option value={0}>SELECT</option>
                                 {professors.map(professor => <option value={professor.id}>{professor.fullName}</option>)}
                             </select>
                         </div>
                         <div>
                             <Label htmlFor="cCourse" align="top">Select a Course:</Label>
                             <select value={this.state.selectValueCourse} onChange={this.handleChangeCourse}>
+                                <option value={0}>SELECT</option>
                                 {courses.map(course => <option value={course.id}>{course.name}</option>)}
                             </select>
                         </div>
@@ -177,7 +203,7 @@ export class Home extends React.Component {
                 </div>
                 <div className="dialog-button">
                     <LinkButton style={{ width: 80 }} onClick={() => this.submitReview()}>Save</LinkButton>
-                    <LinkButton style={{ width: 80 }} onClick={() => this.setState({ closed: true })}>Close</LinkButton>
+                    <LinkButton style={{ width: 80 }} onClick={() => { this.setState({ closed: true }); this.getRatings() }}>Close</LinkButton>
                 </div>
             </Dialog>
         )
