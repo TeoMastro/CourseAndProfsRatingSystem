@@ -35,7 +35,7 @@ export class NavMenu extends Component {
                                     <NavLink tag={Link} className="text-dark" to="/courses">Courses</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="text-dark"><a href="https://login.it.teithe.gr/authorization/?client_id=60ad0ee71aa16502cfc3c280&response_type=code&scope=profile&redirect_uri=31041991eb0b.ngrok.io">Login</a></NavLink>
+                                    <NavLink className="text-dark"><a href="https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io">Login</a></NavLink>
                                 </NavItem>
                             </ul>
                         </Collapse>
