@@ -8,7 +8,6 @@ export class Home extends React.Component {
             data: this.getRatings(),
             dataProfs: this.getProfessors(), 
             flag: true,
-            receiveCode: this.getCode(),
             profReviews: [],
             //dataCourse: this.getCourses(),
             reviews: [],
@@ -42,7 +41,8 @@ export class Home extends React.Component {
         this.handleChangeComments = this.handleChangeComments.bind(this);
     }
     getCode() {
-        if (this.state.flag == true) {
+        console.log(this.state.flag);
+        if (this.state.flag) {
             var link = window.location.href;
             this.state.code = link.slice(36, 61);
             console.log(this.state.code);
@@ -251,6 +251,7 @@ export class Home extends React.Component {
         const clearValue = () => {
             this.setState({ value: null })
         }
+        this.getCode();
         return (
             <div>
                 <h2>Professor's reviews</h2>
