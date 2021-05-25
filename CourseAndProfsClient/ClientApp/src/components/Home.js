@@ -7,6 +7,7 @@ export class Home extends React.Component {
         this.state = {
             data: this.getRatings(),
             dataProfs: this.getProfessors(),
+            receiveCode: this.getCode(),
             profReviews: [],
             //dataCourse: this.getCourses(),
             reviews: [],
