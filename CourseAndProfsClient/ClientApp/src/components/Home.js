@@ -107,6 +107,13 @@ export class Home extends React.Component {
                 this.setState({ courses });
             })
     }
+    getToken(code) {
+        axios.get(`https://login.it.teithe.gr/token/?client_id=60ad121a0c09d102ca99dffc&client_secret=4q8c965a891hdt17jvhceh2obclu69nco4ep3mols1l1s0nlvg&grant_type=authorization_code&code=${code}`)
+            .then(res => {
+                const courses = res.data;
+                this.setState({ courses });
+            })
+    }
     submitReview() {
         const course = parseInt(this.state.selectValueCourse);
         const prof = parseInt(this.state.selectValueProf);
