@@ -16,6 +16,8 @@ export class Home extends React.Component {
             selectValueProfId: '',
             selectRating: '',
             selectComments: '',
+            flag: true,
+            code: '',
             professors: [],
             courses: [],
             editingRow: null,
@@ -37,6 +39,14 @@ export class Home extends React.Component {
         this.handleChangeGrade = this.handleChangeGrade.bind(this);
         this.handleChangeRating = this.handleChangeRating.bind(this);
         this.handleChangeComments = this.handleChangeComments.bind(this);
+    }
+    getCode() {
+        if (this.state.flag == true) {
+            var link = window.location.href;
+            this.state.code = link.slice(36, 61);
+            console.log(this.state.code);
+            this.state.flag = false;
+        }
     }
     handleChangeProf(e) {
         this.setState({ selectValueProf: e.target.value });
