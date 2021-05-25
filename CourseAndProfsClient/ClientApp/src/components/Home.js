@@ -6,7 +6,8 @@ export class Home extends React.Component {
         super(props);
         this.state = {
             data: this.getRatings(),
-            dataProfs: this.getProfessors(),
+            dataProfs: this.getProfessors(), 
+            flag: true,
             receiveCode: this.getCode(),
             profReviews: [],
             //dataCourse: this.getCourses(),
@@ -17,7 +18,6 @@ export class Home extends React.Component {
             selectValueProfId: '',
             selectRating: '',
             selectComments: '',
-            flag: true,
             code: '',
             professors: [],
             courses: [],
