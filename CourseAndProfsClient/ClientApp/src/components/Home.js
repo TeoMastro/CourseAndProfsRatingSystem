@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import { DataGrid, GridColumn, Form, Dialog, Label, LinkButton } from 'rc-easyui';
 import axios from 'axios';
+import { get } from 'jquery';
 export class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -32,6 +33,13 @@ export class Home extends React.Component {
             title: '',
             closedR: true,
             closed: true,
+            access_token: '',
+            refresh_token: '',
+            userid: '',
+            usersname: '',
+            userstitle: '',
+            usersam: '',
+
             
         }
         this.handleChangeProf = this.handleChangeProf.bind(this);
@@ -47,6 +55,8 @@ export class Home extends React.Component {
             this.state.code = link.slice(36, 61);
             console.log(this.state.code);
             this.state.flag = false;
+            this.state.usersname = 'Unauthorized';
+            this.getToken(this.state.code);
         }
     }
     handleChangeProf(e) {
@@ -108,10 +118,33 @@ export class Home extends React.Component {
             })
     }
     getToken(code) {
-        axios.get(`https://login.it.teithe.gr/token/?client_id=60ad121a0c09d102ca99dffc&client_secret=4q8c965a891hdt17jvhceh2obclu69nco4ep3mols1l1s0nlvg&grant_type=authorization_code&code=${code}`)
+        const params = new URLSearchParams();
+        params.append('client_id', '60ad121a0c09d102ca99dffc')
+        params.append('client_secret', '4q8c965a891hdt17jvhceh2obclu69nco4ep3mols1l1s0nlvg')
+        params.append('grant_type', 'authorization_code')
+        params.append('code', code)
+        axios.post('https://login.iee.ihu.gr/token', params)
             .then(res => {
-                const courses = res.data;
-                this.setState({ courses });
+                console.log(res);
+                this.state.access_token = res.data.access_token
+                this.state.refresh_token = res.data.refresh_token
+                this.state.userid = res.data.user
+                console.log(this.state.access_token);
+                console.log(this.state.refresh_token);
+                console.log(this.state.userid);
+                this.getProfile(res.data.access_token);
+            })
+    }
+    getProfile(ACCESS_TOKEN) {
+        axios.get('https://api.iee.ihu.gr/profile', { headers: { 'x-access-token': ACCESS_TOKEN, 'content-type': 'application/json' } })
+            .then(res => {
+                console.log(res);
+                this.state.usersname = res.data.cn;
+                this.state.usersam = res.data.uid;
+                this.state.userstitle = res.data.title;
+                console.log(this.state.usersname);
+                console.log(this.state.usersam);
+                console.log(this.state.userstitle);
             })
     }
     submitReview() {
@@ -262,6 +295,9 @@ export class Home extends React.Component {
         return (
             <div>
                 <h2>Professor's reviews</h2>
+                <h5>Loggen in as: {this.state.usersname}<br></br></h5>
+                <label>{this.state.usersam}  </label>
+                <label> {this.state.userstitle}</label>
                 <DataGrid data={this.state.reviews} style={{ height: 550, padding: '15' }}>
                     <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
                     <GridColumn field="fullName" title="Name" align="center"></GridColumn>
