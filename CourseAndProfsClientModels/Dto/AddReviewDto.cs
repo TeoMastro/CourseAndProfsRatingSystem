@@ -10,6 +10,8 @@ namespace CourseAndProfsClientModels.Dto
   {
     public long CourseId { get; set; }
     public long ProfessorId { get; set; }
+    public long AppsId { get; set; }
+    public string Token { get; set; }
     public double UsersSubjectScore { get; set; }
     public double Rating { get; set; }
     public string Comments { get; set; }

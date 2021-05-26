@@ -14,7 +14,8 @@ namespace CourseAndProfsClientModels.Dto
     public string CourseName { get; set; }
     public long ProfessorId { get; set; }
     public string ProfessorName { get; set; }
-    public Guid UserId { get; set; }
+    public long AppsId { get; set; }
+    public string Token { get; set; }
     public double UsersSubjectScore { get; set; }
     public double Rating { get; set; }
     public string Comments { get; set; }

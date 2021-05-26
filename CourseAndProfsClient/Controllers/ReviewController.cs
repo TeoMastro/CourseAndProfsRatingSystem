@@ -123,10 +123,15 @@ namespace CourseAndProfsClient.Controllers
       //}
 
       var user = await userManager.FindByIdAsync(userId);
-      //if (user == null)
-      //{
-      //  return BadRequest("Something went wrong.");
-      //}
+
+
+
+      var userAuth = await Context.UserAuths.Where(x => x.Appsid == dto.AppsId && x.Token.Equals(dto.Token)).SingleOrDefaultAsync(token);
+      if (userAuth == null)
+      {
+        return BadRequest("Unauthorized");
+      }
+
 
       var course = await Context.Courses.Where(x => x.Id == dto.CourseId ).FirstOrDefaultAsync();
       //var professor = Context.Professors.Where(x => x.Id == dto.ProfessorId ).SingleOrDefault();
@@ -142,19 +147,19 @@ namespace CourseAndProfsClient.Controllers
         return NotFound($"Could not find course with id {string.Join(", ", course.Id)}");
       }
 
-      //var rating = await Context.Reviews.SingleOrDefaultAsync(x => x.User == user && x.Professor == professor && x.Course == course, token);
+      var rating = await Context.Reviews.SingleOrDefaultAsync(x => x.UserA.Appsid == dto.AppsId && x.Professor.Id == professor.Id && x.Course.Id == course.Id, token);
 
-      //if (rating != null)
-      //{
-      //  return Conflict("User has already rated the movie.");
-      //}
+      if (rating != null)
+      {
+        return Conflict("User has already rated the movie.");
+      }
 
       professor.AverageRating = (professor.Reviews.Sum(x => x.Rating) + dto.Rating) / (professor.Reviews.Count + 1);
       var review = new Review
       {
         Course = course,
         Professor = professor,
-        User = user,
+        UserA = userAuth,
         UsersSubjectScore = dto.UsersSubjectScore,
         Rating = dto.Rating,
         Comments = dto.Comments,
