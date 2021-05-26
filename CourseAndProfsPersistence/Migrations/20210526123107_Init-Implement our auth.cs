@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CourseAndProfsPersistence.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitImplementourauth : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -148,12 +148,13 @@ namespace CourseAndProfsPersistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CourseTypes",
+                name: "Courses",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    Type = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
                     UpdatedBy = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
@@ -161,24 +162,7 @@ namespace CourseAndProfsPersistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseTypes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Departments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Departments", x => x.Id);
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,6 +224,47 @@ namespace CourseAndProfsPersistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Professors",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FullName = table.Column<string>(type: "text", nullable: true),
+                    Mail = table.Column<string>(type: "text", nullable: true),
+                    Phone = table.Column<string>(type: "text", nullable: true),
+                    Office = table.Column<string>(type: "text", nullable: true),
+                    EOffice = table.Column<string>(type: "text", nullable: true),
+                    Department = table.Column<string>(type: "text", nullable: true),
+                    AverageRating = table.Column<double>(type: "double precision", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Professors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAuths",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Appsid = table.Column<long>(type: "bigint", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAuths", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -686,58 +711,6 @@ namespace CourseAndProfsPersistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    TypeId = table.Column<long>(type: "bigint", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Courses_CourseTypes_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "CourseTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Professors",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FullName = table.Column<string>(type: "text", nullable: true),
-                    Mail = table.Column<string>(type: "text", nullable: true),
-                    Phone = table.Column<string>(type: "text", nullable: true),
-                    Office = table.Column<string>(type: "text", nullable: true),
-                    EOffice = table.Column<string>(type: "text", nullable: true),
-                    DepartmentId = table.Column<long>(type: "bigint", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Professors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Professors_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "IdentityResourceClaims",
                 columns: table => new
                 {
@@ -779,6 +752,34 @@ namespace CourseAndProfsPersistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProfessorCourses",
+                columns: table => new
+                {
+                    ProfessorId = table.Column<long>(type: "bigint", nullable: false),
+                    CourseId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfessorCourses", x => new { x.ProfessorId, x.CourseId });
+                    table.ForeignKey(
+                        name: "FK_ProfessorCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ProfessorCourses_Professors_ProfessorId",
+                        column: x => x.ProfessorId,
+                        principalTable: "Professors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -787,6 +788,7 @@ namespace CourseAndProfsPersistence.Migrations
                     CourseId = table.Column<long>(type: "bigint", nullable: true),
                     ProfessorId = table.Column<long>(type: "bigint", nullable: true),
                     UserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    UserAId = table.Column<long>(type: "bigint", nullable: true),
                     UsersSubjectScore = table.Column<double>(type: "double precision", nullable: false),
                     Rating = table.Column<double>(type: "double precision", nullable: false),
                     Comments = table.Column<string>(type: "text", nullable: true),
@@ -814,6 +816,12 @@ namespace CourseAndProfsPersistence.Migrations
                         name: "FK_Reviews_Professors_ProfessorId",
                         column: x => x.ProfessorId,
                         principalTable: "Professors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviews_UserAuths_UserAId",
+                        column: x => x.UserAId,
+                        principalTable: "UserAuths",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -949,11 +957,6 @@ namespace CourseAndProfsPersistence.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_TypeId",
-                table: "Courses",
-                column: "TypeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
                 column: "DeviceCode",
@@ -1001,9 +1004,9 @@ namespace CourseAndProfsPersistence.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Professors_DepartmentId",
-                table: "Professors",
-                column: "DepartmentId");
+                name: "IX_ProfessorCourses_CourseId",
+                table: "ProfessorCourses",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_CourseId",
@@ -1014,6 +1017,11 @@ namespace CourseAndProfsPersistence.Migrations
                 name: "IX_Reviews_ProfessorId",
                 table: "Reviews",
                 column: "ProfessorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserAId",
+                table: "Reviews",
+                column: "UserAId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_UserId",
@@ -1099,6 +1107,9 @@ namespace CourseAndProfsPersistence.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "ProfessorCourses");
+
+            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
@@ -1126,10 +1137,7 @@ namespace CourseAndProfsPersistence.Migrations
                 name: "Professors");
 
             migrationBuilder.DropTable(
-                name: "CourseTypes");
-
-            migrationBuilder.DropTable(
-                name: "Departments");
+                name: "UserAuths");
         }
     }
 }
