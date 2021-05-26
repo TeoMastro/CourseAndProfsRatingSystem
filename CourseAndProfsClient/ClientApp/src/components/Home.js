@@ -1,15 +1,15 @@
-﻿import React, { Component, useState } from 'react';
-import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ComboBox, ButtonGroup } from 'rc-easyui';
+﻿import React from 'react';
+import { DataGrid, GridColumn, Form, Dialog, Label, LinkButton } from 'rc-easyui';
 import axios from 'axios';
-import { data } from 'jquery';
-
-
+import { get } from 'jquery';
 export class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: this.getRatings(),
-            dataProfs: this.getProfessors(),
+            dataProfs: this.getProfessors(), 
+            flag: true,
+            profReviews: [],
             //dataCourse: this.getCourses(),
             reviews: [],
             selectValueProf: 0,
@@ -18,17 +18,29 @@ export class Home extends React.Component {
             selectValueProfId: '',
             selectRating: '',
             selectComments: '',
+            code: '',
             professors: [],
             courses: [],
             editingRow: null,
+            editingRowR: null,
             model: {},
+            modelR: {},
             rules: {
                 'itemid': 'required',
                 'review': 'required'
             },
             errors: {},
             title: '',
-            closed: true
+            closedR: true,
+            closed: true,
+            access_token: '',
+            refresh_token: '',
+            userid: '',
+            usersname: '',
+            userstitle: '',
+            usersam: '',
+
+            
         }
         this.handleChangeProf = this.handleChangeProf.bind(this);
         this.handleChangeCourse = this.handleChangeCourse.bind(this);
@@ -36,9 +48,21 @@ export class Home extends React.Component {
         this.handleChangeRating = this.handleChangeRating.bind(this);
         this.handleChangeComments = this.handleChangeComments.bind(this);
     }
+    getCode() {
+        console.log(this.state.flag);
+        if (this.state.flag) {
+            var link = window.location.href;
+            this.state.code = link.slice(36, 61);
+            console.log(this.state.code);
+            this.state.flag = false;
+            this.state.usersname = 'Unauthorized';
+            this.getToken(this.state.code);
+        }
+    }
     handleChangeProf(e) {
         this.setState({ selectValueProf: e.target.value });
         this.getCourses(e.target.value);
+        console.log("boo")
     }
     handleChangeCourse(e) {
         this.setState({ selectValueCourse: e.target.value });
@@ -76,7 +100,14 @@ export class Home extends React.Component {
             .then(res => {
                 const professors = res.data.results;
                 this.setState({ professors });
-                //console.log(professors);
+            })
+    }
+    getProfessorsReviews(arg) {
+        axios.get(`https://${window.location.host}/ProfessorsReviews?profId=${arg}&itemsPerPage=20&page=1`)
+            .then(res => {
+                const profReviews = res.data.results;
+                this.setState({ profReviews });
+                console.log(profReviews);
             })
     }
     getCourses(arg) {
@@ -84,7 +115,36 @@ export class Home extends React.Component {
             .then(res => {
                 const courses = res.data;
                 this.setState({ courses });
-                //console.log(courses);
+            })
+    }
+    getToken(code) {
+        const params = new URLSearchParams();
+        params.append('client_id', '60ad121a0c09d102ca99dffc')
+        params.append('client_secret', '4q8c965a891hdt17jvhceh2obclu69nco4ep3mols1l1s0nlvg')
+        params.append('grant_type', 'authorization_code')
+        params.append('code', code)
+        axios.post('https://login.iee.ihu.gr/token', params)
+            .then(res => {
+                console.log(res);
+                this.state.access_token = res.data.access_token
+                this.state.refresh_token = res.data.refresh_token
+                this.state.userid = res.data.user
+                console.log(this.state.access_token);
+                console.log(this.state.refresh_token);
+                console.log(this.state.userid);
+                this.getProfile(res.data.access_token);
+            })
+    }
+    getProfile(ACCESS_TOKEN) {
+        axios.get('https://api.iee.ihu.gr/profile', { headers: { 'x-access-token': ACCESS_TOKEN, 'content-type': 'application/json' } })
+            .then(res => {
+                console.log(res);
+                this.state.usersname = res.data.cn;
+                this.state.usersam = res.data.uid;
+                this.state.userstitle = res.data.title;
+                console.log(this.state.usersname);
+                console.log(this.state.usersam);
+                console.log(this.state.userstitle);
             })
     }
     submitReview() {
@@ -119,6 +179,16 @@ export class Home extends React.Component {
             closed: false
         });
     }
+    readReviews(row) {
+        this.setState({
+            editingRowR: row,
+            modelR: Object.assign({}, row),
+            title: row.fullName,
+            closedR: false
+        });
+        this.getProfessorsReviews(row.id);
+        console.log(row);
+    }
     saveRow() {
         this.form.validate(() => {
             if (this.form.valid()) {
@@ -147,14 +217,13 @@ export class Home extends React.Component {
         let professors = this.state.professors;
         let courses = this.state.courses;
         return (
-            <Dialog modal title={title} closed={closed} onClose={() => { this.setState({ closed: true }); this.getRatings() }}>
+            <Dialog modal draggable title={title} closed={closed} onClose={() => { this.setState({ closed: true }); this.getRatings() }}>
                 <div className="f-full" style={{ padding: '20px 50px' }}>
                     <Form className="f-full"
                         ref={ref => this.form = ref}
                         model={row}
                         rules={rules}
-                        onValidate={(errors) => this.setState({ errors: errors })}
-                    >
+                        onValidate={(errors) => this.setState({ errors: errors })}>
                         <div>
                             <Label htmlFor="cProf" align="top">Select a Professor:</Label>
                             <select value={this.state.selectValueProf} onChange={this.handleChangeProf}>
@@ -169,36 +238,19 @@ export class Home extends React.Component {
                                 {courses.map(course => <option value={course.id}>{course.name}</option>)}
                             </select>
                         </div>
-                        {/*<div>*/}
-                        {/*    <Label htmlFor="cCourse" align="top">Select a Course:</Label>*/}
-                        {/*    <ComboBox*/}
-                        {/*        inputId="cCourse"*/}
-                        {/*        iconCls="icon-man"*/}
-                        {/*        editable={false}*/}
-                        {/*        data={this.state.data}*/}
-                        {/*        value={this.state.value}*/}
-                        {/*        style={{ width: '100%' }}*/}
-                        {/*        onChange={(value) => this.setState({ value: value })}*/}
-                        {/*    />*/}
-                        {/*    <p>You selected: {this.state.value}</p>*/}
-                        {/*</div>*/}
-
-                        <div style={{ marginBottom: 10 }}>
+                        <div style={{ marginTop: 10, marginBottom: 10 }}>
                             <Label htmlFor="tscore" style={{ width: 250 }}>Τι βαθμο πηρατε στο μαθημα;</Label>
                             <input value={this.state.selectGrade} onChange={this.handleChangeGrade} style={{ width: 50 }}></input>
                         </div>
-
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="treview" style={{ width: 250 }}>Τι βαθμο βαζετε στον καθηγητη;</Label>
                             <input value={this.state.selectRating} onChange={this.handleChangeRating} style={{ width: 50 }}></input>
                             <div className="error">{this.getError('review')}</div>
                         </div>
-
                         <div style={{ marginBottom: 10 }}>
                             <Label htmlFor="tcomments" align="top">Σχολια:</Label>
                             <textarea value={this.state.selectComments} onChange={this.handleChangeComments} style={{ width: '100%', height: 120 }}></textarea>
                         </div>
-
                     </Form>
                 </div>
                 <div className="dialog-button">
@@ -208,25 +260,63 @@ export class Home extends React.Component {
             </Dialog>
         )
     }
+    renderReviews() {
+        const row = this.state.modelR;
+        const { title, closedR, rules } = this.state;
+        return (
+            <Dialog modal draggable resizable title={title} closed={closedR} onClose={() => this.setState({ closedR: true })}>
+                <div className="f-full" style={{ padding: '20px 50px' }}>
+                    <Form className="f-full"
+                        ref={ref => this.form = ref}
+                        model={row}
+                        rules={rules}
+                        onValidate={(errors) => this.setState({ errors: errors })}
+                    >
+                        <div>
+                            <DataGrid data={this.state.profReviews} columnResizing style={{ width: 700, height: 400, padding: '15' }}>
+                                <GridColumn field="reviewId" title="revId" hidden="true"></GridColumn>
+                                <GridColumn field="courseName" title="Course Name" align="center"></GridColumn>
+                                <GridColumn field="usersSubjectScore" title="Students's score" align="center" width='60px'></GridColumn>
+                                <GridColumn field="rating" title="Rating" align="center" width='60px'></GridColumn>
+                                <GridColumn field="comments" title="Comments" align="center"></GridColumn>
+                            </DataGrid>
+                        </div>
+                    </Form>
+                </div>
+            </Dialog>
+        )
+    }
+
     render() {
         const clearValue = () => {
             this.setState({ value: null })
         }
+        this.getCode();
         return (
             <div>
-                <h2>Professor's ratings</h2>
+                <h2>Professor's reviews</h2>
+                <h5>Loggen in as: {this.state.usersname}<br></br></h5>
+                <label>{this.state.usersam}  </label>
+                <label> {this.state.userstitle}</label>
                 <DataGrid data={this.state.reviews} style={{ height: 550, padding: '15' }}>
                     <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
                     <GridColumn field="fullName" title="Name" align="center"></GridColumn>
                     <GridColumn field="mail" title="Mail" align="center"></GridColumn>
                     <GridColumn field="department" title="Department" align="center"></GridColumn>
                     <GridColumn field="averageRating" title="Average rating" align="center"></GridColumn>
+                    <GridColumn field="act" title="Actions" align="center" width={110}
+                        render={({ row }) => (
+                            <div>
+                                <LinkButton onClick={() => this.readReviews(row)}>Reviews</LinkButton>
+                            </div>
+                        )}
+                    />
                 </DataGrid>
                 {this.renderDialog()}
+                {this.renderReviews()}
                 <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
             </div>
         );
     }
 }
-
 export default Home;

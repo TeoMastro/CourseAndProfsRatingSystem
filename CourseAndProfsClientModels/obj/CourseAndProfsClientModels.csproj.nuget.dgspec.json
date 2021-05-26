@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj": {}
+    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj": {
+    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj",
+        "projectUniqueName": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj",
         "projectName": "CourseAndProfsClientModels",
-        "projectPath": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\obj\\",
+        "projectPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\CourseAndProfsClientModels.csproj",
+        "packagesPath": "C:\\Users\\vagmark\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsClientModels\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vagmark\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
-                "projectPath": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj"
+              "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
+                "projectPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj"
               }
             }
           }
@@ -58,21 +58,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
+    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
+        "projectUniqueName": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
         "projectName": "CourseAndProfsPersistence",
-        "projectPath": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
-        "packagesPath": "C:\\Users\\Teo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Teo\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\obj\\",
+        "projectPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
+        "packagesPath": "C:\\Users\\vagmark\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Teo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vagmark\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -140,7 +140,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

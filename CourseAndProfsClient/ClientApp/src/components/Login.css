@@ -1,0 +1,58 @@
+﻿.backForm {
+    display: block;
+    width: 100%;
+}
+.formTitle {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.divForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgb(255, 255, 255);
+    padding: 40px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 2rem;
+    width: 100%;
+}
+.formText {
+    color: rgba(41, 44, 52);
+    text-align: center;
+    margin-bottom: 0px;
+    border: 0rem;
+    font-family: Arial;
+    width: 100%;
+}
+.formInput {
+    width: 100%;
+    border-radius: 0.7rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-bottom: 2px solid rgb(59, 94, 189);
+    margin-bottom: 30px;
+    font-family: Arial;
+}
+.formButton {
+    width: 100%;
+    background-color: rgb(59, 94, 189);
+    border-radius: 0.7rem;
+    color: white;
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    text-shadow: 2px 2px 5px rgb(0, 0, 0);
+    border: 0rem;
+    padding: 0.5rem 1rem;
+    margin-top: 20px;
+    font-family: Arial;
+}
+.formButton:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.formInput:focus {
+    border-radius: 0rem;
+    border: 0px;
+}
