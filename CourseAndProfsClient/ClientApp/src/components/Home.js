@@ -172,7 +172,11 @@ export class Home extends React.Component {
         } else {
             axios.post(`https://${window.location.host}/Add?courseId=${course}&professorId=${prof}&appsId=${id}&token=${token}&usersSubjectScore=${grade}&rating=${rating}&comments=${comments}`)
                 .then(res => {
-                    window.alert(res.data);
+                    window.alert(res.response.data);
+                })
+                .catch(res => {
+                    window.alert(res.response.data);
+                    console.log(res.response.data);
                 })
             this.getRatings();
         }
@@ -313,7 +317,6 @@ export class Home extends React.Component {
         this.getCode();
         return (
             <div>
-                <h2>Professor's reviews</h2>
                 <h5>Loggen in as: {this.state.usersname}<br></br></h5>
                 <label>{this.state.usersam}  </label>
                 <label> {this.state.userstitle}</label>
