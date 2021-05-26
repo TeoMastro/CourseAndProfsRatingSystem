@@ -1,7 +1,8 @@
 ﻿import React from 'react';
-import { DataGrid, GridColumn, Form, Dialog, Label, LinkButton } from 'rc-easyui';
+import { DataGrid, GridColumn, Form, Dialog, Label, NumberBox, LinkButton } from 'rc-easyui';
 import axios from 'axios';
 import { get } from 'jquery';
+import './Home.css';
 export class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -10,7 +11,6 @@ export class Home extends React.Component {
             dataProfs: this.getProfessors(), 
             flag: true,
             profReviews: [],
-            //dataCourse: this.getCourses(),
             reviews: [],
             selectValueProf: 0,
             selectValueCourse: 0,
@@ -30,6 +30,12 @@ export class Home extends React.Component {
                 'review': 'required'
             },
             errors: {},
+            operators: ["nofilter", "equal", "notequal", "less", "greater"],
+            status: [
+                { value: null, text: "All" },
+                { value: "P", text: "P" },
+                { value: "N", text: "N" }
+            ],
             title: '',
             closedR: true,
             closed: true,
@@ -39,9 +45,8 @@ export class Home extends React.Component {
             usersname: '',
             userstitle: '',
             usersam: '',
-            addYourReviewButtonText: 'Log in to add your review',
+            addYourReviewButtonText: 'Login to add your review',
             isAuthorized: false
-            
         }
         this.handleChangeProf = this.handleChangeProf.bind(this);
         this.handleChangeCourse = this.handleChangeCourse.bind(this);
@@ -194,7 +199,7 @@ export class Home extends React.Component {
         if (this.state.isAuthorized) {
             this.setState({
                 model: Object.assign({}),
-                title: 'Add',
+                title: 'Add your review',
                 closed: false
             });
         }
@@ -240,45 +245,48 @@ export class Home extends React.Component {
         let professors = this.state.professors;
         let courses = this.state.courses;
         return (
-            <Dialog modal draggable title={title} closed={closed} onClose={() => { this.setState({ closed: true }); this.getRatings() }}>
-                <div className="f-full" style={{ padding: '20px 50px' }}>
+            <Dialog className="dial1" borderType="none" modal closed={closed} onClose={() => { this.setState({ closed: true }); this.getRatings() }}>
+                <div className="popup1">
                     <Form className="f-full"
                         ref={ref => this.form = ref}
                         model={row}
                         rules={rules}
                         onValidate={(errors) => this.setState({ errors: errors })}>
-                        <div>
-                            <Label htmlFor="cProf" align="top">Select a Professor:</Label>
-                            <select value={this.state.selectValueProf} onChange={this.handleChangeProf}>
+                        <div className="div2">
+                            <h3 className="h31">{title}</h3>
+                        </div>
+                        <div className="div2"> 
+                            <Label className="lab1" htmlFor="cProf" align="top">Select a Professor:</Label>
+                            <select className="texare1" value={this.state.selectValueProf} onChange={this.handleChangeProf}>
                                 <option value={0}>SELECT</option>
                                 {professors.map(professor => <option value={professor.id}>{professor.fullName}</option>)}
                             </select>
                         </div>
-                        <div>
-                            <Label htmlFor="cCourse" align="top">Select a Course:</Label>
-                            <select value={this.state.selectValueCourse} onChange={this.handleChangeCourse}>
+                        <div className="div2"> 
+                            <Label className="lab1" htmlFor="cCourse" align="top">Select a Course:</Label>
+                            <select className="texare1" value={this.state.selectValueCourse} onChange={this.handleChangeCourse}>
                                 <option value={0}>SELECT</option>
                                 {courses.map(course => <option value={course.id}>{course.name}</option>)}
                             </select>
                         </div>
-                        <div style={{ marginTop: 10, marginBottom: 10 }}>
-                            <Label htmlFor="tscore" style={{ width: 250 }}>Τι βαθμο πηρατε στο μαθημα;</Label>
-                            <input value={this.state.selectGrade} onChange={this.handleChangeGrade} style={{ width: 50 }}></input>
+                        <div className="div2">
+                            <Label className="lab2" htmlFor="tscore">Grade you got in the lesson:</Label>
+                            <input className="texare1" value={this.state.selectGrade} onChange={this.handleChangeGrade} style={{ width: 50 }}></input>
                         </div>
-                        <div style={{ marginBottom: 10 }}>
-                            <Label htmlFor="treview" style={{ width: 250 }}>Τι βαθμο βαζετε στον καθηγητη;</Label>
-                            <input value={this.state.selectRating} onChange={this.handleChangeRating} style={{ width: 50 }}></input>
-                            <div className="error">{this.getError('review')}</div>
+                        <div className="div2">
+                            <Label className="lab2" htmlFor="treview">Degree you give to the teacher:</Label>
+                            <input className="texare1" value={this.state.selectRating} onChange={this.handleChangeRating} style={{ width: 50 }}></input>
                         </div>
-                        <div style={{ marginBottom: 10 }}>
-                            <Label htmlFor="tcomments" align="top">Σχολια:</Label>
-                            <textarea value={this.state.selectComments} onChange={this.handleChangeComments} style={{ width: '100%', height: 120 }}></textarea>
+                        <div className="error">{this.getError('review')}</div>
+                        <div className="div2">
+                            <Label className="lab3" htmlFor="tcomments" align="top">Comments:</Label>
+                            <textarea className="texare2" value={this.state.selectComments} onChange={this.handleChangeComments}></textarea>
                         </div>
                     </Form>
                 </div>
                 <div className="dialog-button">
-                    <LinkButton style={{ width: 80 }} onClick={() => this.submitReview()}>Save</LinkButton>
-                    <LinkButton style={{ width: 80 }} onClick={() => { this.setState({ closed: true }); this.getRatings() }}>Close</LinkButton>
+                    <LinkButton className="linbut2" style={{ width: 80 }} onClick={() => this.submitReview()}>Save</LinkButton>
+                    <LinkButton className="linbut2" style={{ width: 80 }} onClick={() => { this.setState({ closed: true }); this.getRatings() }}>Close</LinkButton>
                 </div>
             </Dialog>
         )
@@ -287,21 +295,26 @@ export class Home extends React.Component {
         const row = this.state.modelR;
         const { title, closedR, rules } = this.state;
         return (
-            <Dialog modal draggable resizable title={title} closed={closedR} onClose={() => this.setState({ closedR: true })}>
-                <div className="f-full" style={{ padding: '20px 50px' }}>
+            <Dialog className="dial1" borderType="none" modal closed={closedR} onClose={() => this.setState({ closedR: true })}>
+                <div className="popup1">
                     <Form className="f-full"
                         ref={ref => this.form = ref}
                         model={row}
                         rules={rules}
-                        onValidate={(errors) => this.setState({ errors: errors })}
-                    >
-                        <div>
-                            <DataGrid data={this.state.profReviews} columnResizing style={{ width: 700, height: 400, padding: '15' }}>
+                        onValidate={(errors) => this.setState({ errors: errors })}>
+                        <div className="div3">
+                            <h3 className="h31">{title}</h3>
+                            <LinkButton className="linbut2" style={{ width: 80 }} onClick={() => { this.setState({ closedR: true })}}>Close</LinkButton>
+                        </div>
+                        <div className="div2"> 
+                            <DataGrid className="dagr1" data={this.state.profReviews} filterable columnMoving multiSort columnResizing>
                                 <GridColumn field="reviewId" title="revId" hidden="true"></GridColumn>
-                                <GridColumn field="courseName" title="Course Name" align="center"></GridColumn>
-                                <GridColumn field="usersSubjectScore" title="Students's score" align="center" width='60px'></GridColumn>
-                                <GridColumn field="rating" title="Rating" align="center" width='60px'></GridColumn>
-                                <GridColumn field="comments" title="Comments" align="center"></GridColumn>
+                                <GridColumn field="courseName" title="Course Name" align="center" sortable></GridColumn>
+                                <GridColumn field="usersSubjectScore" title="Students's score" align="center" width='60px' sortable></GridColumn>
+                                <GridColumn field="rating" title="Rating" align="center" width='60px' sortable
+                                    filterOperators={this.state.operators}
+                                    filter={() => <NumberBox></NumberBox>}></GridColumn>
+                                <GridColumn field="comments" title="Comments" align="center" sortable></GridColumn>
                             </DataGrid>
                         </div>
                     </Form>
@@ -309,7 +322,6 @@ export class Home extends React.Component {
             </Dialog>
         )
     }
-
     render() {
         const clearValue = () => {
             this.setState({ value: null })
@@ -317,26 +329,33 @@ export class Home extends React.Component {
         this.getCode();
         return (
             <div>
-                <h5>Loggen in as: {this.state.usersname}<br></br></h5>
-                <label>{this.state.usersam}  </label>
-                <label> {this.state.userstitle}</label>
-                <DataGrid data={this.state.reviews} style={{ height: 550, padding: '15' }}>
+                <div className='div1'>
+                    <div >
+                        <h5 className='h51'>Loggen in as {this.state.usersname}<br></br></h5>
+                    </div>
+                    <div>
+                        <LinkButton className='linbut1' onClick={() => this.addReview()}>{this.state.addYourReviewButtonText}</LinkButton>
+                    </div>
+                </div>
+                <DataGrid className="dagr1" data={this.state.reviews} filterable columnMoving multiSort columnResizing>
                     <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
-                    <GridColumn field="fullName" title="Name" align="center"></GridColumn>
-                    <GridColumn field="mail" title="Mail" align="center"></GridColumn>
-                    <GridColumn field="department" title="Department" align="center"></GridColumn>
-                    <GridColumn field="averageRating" title="Average rating" align="center"></GridColumn>
+                    <GridColumn field="fullName" title="Name" align="center" sortable></GridColumn>
+                    <GridColumn field="mail" title="Mail" align="center" sortable></GridColumn>
+                    <GridColumn field="department" title="Department" align="center" sortable></GridColumn>
+                    <GridColumn field="averageRating" title="Average rating" align="center" sortable
+                        filterOperators={this.state.operators}
+                        filter={() => <NumberBox></NumberBox>}></GridColumn>
                     <GridColumn field="act" title="Actions" align="center" width={110}
+                        filter={() => <label></label>}
                         render={({ row }) => (
                             <div>
-                                <LinkButton onClick={() => this.readReviews(row)}>Reviews</LinkButton>
+                                <LinkButton className="linbut3" onClick={() => this.readReviews(row)}>Reviews</LinkButton>
                             </div>
                         )}
                     />
                 </DataGrid>
                 {this.renderDialog()}
                 {this.renderReviews()}
-                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>{this.state.addYourReviewButtonText}</LinkButton>
             </div>
         );
     }
