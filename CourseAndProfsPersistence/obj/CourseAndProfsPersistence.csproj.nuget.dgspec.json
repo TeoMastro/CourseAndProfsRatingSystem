@@ -1,21 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {}
+    "C:\\Users\\Dimitris Gavriilidis\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
+    "C:\\Users\\Dimitris Gavriilidis\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
+        "projectUniqueName": "C:\\Users\\Dimitris Gavriilidis\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
         "projectName": "CourseAndProfsPersistence",
-        "projectPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
-        "packagesPath": "C:\\Users\\vagmark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vagmark\\source\\repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\obj\\",
+        "projectPath": "C:\\Users\\Dimitris Gavriilidis\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\CourseAndProfsPersistence.csproj",
+        "packagesPath": "C:\\Users\\Dimitris Gavriilidis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dimitris Gavriilidis\\Source\\Repos\\CourseAndProfsRatingSystem\\CourseAndProfsPersistence\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\vagmark\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Dimitris Gavriilidis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -82,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
