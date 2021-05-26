@@ -39,7 +39,8 @@ export class Home extends React.Component {
             usersname: '',
             userstitle: '',
             usersam: '',
-
+            addYourReviewButtonText: 'Log in to add your review',
+            isAuthorized: false
             
         }
         this.handleChangeProf = this.handleChangeProf.bind(this);
@@ -145,9 +146,22 @@ export class Home extends React.Component {
                 console.log(this.state.usersname);
                 console.log(this.state.usersam);
                 console.log(this.state.userstitle);
+                this.addUpdateUser();
+                this.state.addYourReviewButtonText = 'Add your review';
+                this.state.isAuthorized = true;
+            })
+    }
+    addUpdateUser() {
+        const id = this.state.userid;
+        const token = this.state.access_token;
+        axios.post(`https://${window.location.host}/api/user?id=${id}&token=${token}`)
+            .then(res => {
+                console.log(res);
             })
     }
     submitReview() {
+        const id = this.state.userid;
+        const token = this.state.access_token;
         const course = parseInt(this.state.selectValueCourse);
         const prof = parseInt(this.state.selectValueProf);
         const grade = parseInt(this.state.selectGrade);
@@ -156,7 +170,7 @@ export class Home extends React.Component {
         if (course == 0 || prof == 0 || grade > 10 || grade < 0 || rating > 10 || rating < 0) {
             window.alert("Check the fields");
         } else {
-            axios.post(`https://${window.location.host}/Add?courseId=${course}&professorId=${prof}&usersSubjectScore=${grade}&rating=${rating}&comments=${comments}`)
+            axios.post(`https://${window.location.host}/Add?courseId=${course}&professorId=${prof}&appsId=${id}&token=${token}&usersSubjectScore=${grade}&rating=${rating}&comments=${comments}`)
                 .then(res => {
                     window.alert(res.data);
                 })
@@ -173,11 +187,16 @@ export class Home extends React.Component {
             : null;
     }
     addReview(row) {
-        this.setState({
-            model: Object.assign({}),
-            title: 'Add',
-            closed: false
-        });
+        if (this.state.isAuthorized) {
+            this.setState({
+                model: Object.assign({}),
+                title: 'Add',
+                closed: false
+            });
+        }
+        else {
+            window.open("https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io", "_self");
+        }
     }
     readReviews(row) {
         this.setState({
@@ -314,7 +333,7 @@ export class Home extends React.Component {
                 </DataGrid>
                 {this.renderDialog()}
                 {this.renderReviews()}
-                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>Add your review</LinkButton>
+                <LinkButton style={{ width: '100%' }} onClick={() => this.addReview()}>{this.state.addYourReviewButtonText}</LinkButton>
             </div>
         );
     }
