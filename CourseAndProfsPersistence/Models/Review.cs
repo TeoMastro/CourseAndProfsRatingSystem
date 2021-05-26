@@ -13,6 +13,7 @@ namespace CourseAndProfsPersistence.Models
     public Course Course { get; set; }
     public Professor Professor { get; set; }
     public CaPUser User { get; set; }
+    public UserAuth UserA{ get; set; }
     public double UsersSubjectScore { get; set; }
     public double Rating { get; set; }
     public string Comments { get; set; }

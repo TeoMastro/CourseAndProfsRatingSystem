@@ -1,6 +1,7 @@
 ﻿using CourseAndProfsClientModels;
 using CourseAndProfsClientModels.Dto;
 using CourseAndProfsPersistence.Models;
+using CourseAndProfsPersistence.Helpers;
 using CourseAndProfsClientModels.Enums;
 using Kritikos.PureMap;
 using Kritikos.PureMap.Contracts;
@@ -20,7 +21,7 @@ namespace CourseAndProfsClient.Helpers
       .Map<Course, CourseDto>(mapper => course => new CourseDto() { Id = course.Id, Name = course.Name, Type = course.Type})
       .Map<CourseDto, Course>(mapper => courseDto => new Course() { Id = courseDto.Id, Name = courseDto.Name, Type = courseDto.Type})
       .Map<AddCourseDto, Course>(mapper => addCourseDto => new Course() { Name = addCourseDto.Name, Type = addCourseDto.Type })
-      .Map<Review, ReviewDto>(mapper => review => new ReviewDto() {ReviewId = review.Id, CourseId = review.Course.Id, CourseName = review.Course.Name, ProfessorId = review.Professor.Id, ProfessorName = review.Professor.FullName, UsersSubjectScore = review.UsersSubjectScore, Rating = review.Rating, Comments = review.Comments, CreatedAt = review.CreatedAt});
+      .Map<Review, ReviewDto>(mapper => review => new ReviewDto() {ReviewId = review.Id, AppsId = review.UserA.Appsid, Token = review.UserA.Token, CourseId = review.Course.Id, CourseName = review.Course.Name, ProfessorId = review.Professor.Id, ProfessorName = review.Professor.FullName, UsersSubjectScore = review.UsersSubjectScore, Rating = review.Rating, Comments = review.Comments, CreatedAt = review.CreatedAt});
 
   }
 }

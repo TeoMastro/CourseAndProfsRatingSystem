@@ -27,7 +27,7 @@ namespace CourseAndProfsPersistence
     public DbSet<ProfessorCourse> ProfessorCourses { get; set; }
 
     public DbSet<Device> Devices { get; set; }
-
+    public DbSet<UserAuth> UserAuths { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);

@@ -158,6 +158,36 @@ namespace CourseAndProfsPersistence.Migrations
                     b.ToTable("Devices");
                 });
 
+            modelBuilder.Entity("CourseAndProfsPersistence.Identity.UserAuth", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long>("Appsid")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserAuths");
+                });
+
             modelBuilder.Entity("CourseAndProfsPersistence.Joins.ProfessorCourse", b =>
                 {
                     b.Property<long>("ProfessorId")
@@ -291,6 +321,9 @@ namespace CourseAndProfsPersistence.Migrations
                     b.Property<Guid>("UpdatedBy")
                         .HasColumnType("uuid");
 
+                    b.Property<long?>("UserAId")
+                        .HasColumnType("bigint");
+
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
@@ -302,6 +335,8 @@ namespace CourseAndProfsPersistence.Migrations
                     b.HasIndex("CourseId");
 
                     b.HasIndex("ProfessorId");
+
+                    b.HasIndex("UserAId");
 
                     b.HasIndex("UserId");
 
@@ -1276,6 +1311,10 @@ namespace CourseAndProfsPersistence.Migrations
                         .WithMany("Reviews")
                         .HasForeignKey("ProfessorId");
 
+                    b.HasOne("CourseAndProfsPersistence.Identity.UserAuth", "UserA")
+                        .WithMany()
+                        .HasForeignKey("UserAId");
+
                     b.HasOne("CourseAndProfsPersistence.Identity.CaPUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -1285,6 +1324,8 @@ namespace CourseAndProfsPersistence.Migrations
                     b.Navigation("Professor");
 
                     b.Navigation("User");
+
+                    b.Navigation("UserA");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceClaim", b =>
