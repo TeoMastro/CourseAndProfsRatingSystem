@@ -172,7 +172,7 @@ export class Home extends React.Component {
         } else {
             axios.post(`https://${window.location.host}/Add?courseId=${course}&professorId=${prof}&appsId=${id}&token=${token}&usersSubjectScore=${grade}&rating=${rating}&comments=${comments}`)
                 .then(res => {
-                    window.alert(res.response.data);
+                    window.alert(res.data);
                 })
                 .catch(res => {
                     window.alert(res.response.data);
