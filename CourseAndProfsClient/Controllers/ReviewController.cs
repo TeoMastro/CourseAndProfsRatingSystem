@@ -151,7 +151,7 @@ namespace CourseAndProfsClient.Controllers
 
       if (rating != null)
       {
-        return Conflict("User has already rated the movie.");
+        return Conflict("User has already reviewd the professor and course.");
       }
 
       professor.AverageRating = (professor.Reviews.Sum(x => x.Rating) + dto.Rating) / (professor.Reviews.Count + 1);
