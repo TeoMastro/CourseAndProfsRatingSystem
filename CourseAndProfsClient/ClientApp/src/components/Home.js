@@ -73,7 +73,7 @@ export class Home extends React.Component {
     }
     handleChangeGrade(e) {
         let isnum = /^\d+$/.test(e.target.value);
-        if (isnum) {
+        if (isnum || e.target.value == '') {
             this.setState({ selectGrade: e.target.value });
         }
         else {
@@ -82,7 +82,7 @@ export class Home extends React.Component {
     }
     handleChangeRating(e) {
         let isnum = /^\d+$/.test(e.target.value);
-        if (isnum) {
+        if (isnum || e.target.value == '') {
             this.setState({ selectRating: e.target.value });
         }
         else {
