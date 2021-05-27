@@ -107,6 +107,42 @@ namespace CourseAndProfsClient.Controllers
 
       return Ok(result);
     }
+    [HttpGet("StudentsReviews")]
+    public async Task<ActionResult<List<ReviewDto>>> GetStudentsReviews(long appsId, int itemsPerPage = 20, int page = 1, CancellationToken token = default)
+    {
+      var userid = RetrieveUserId().ToString();
+      //var user = await userManager.FindByIdAsync(userId);
+
+      //if (user == null)
+      //{
+      //  return BadRequest("Something went wrong.");
+      //}
+
+      var reviews = Context.Reviews.Include(x => x.Professor).Where(x => x.UserA.Appsid == appsId).OrderBy(x => x.CreatedAt);
+      var totalReviews = await reviews.CountAsync(token);
+      var pagedReviews = await reviews.Slice(page, itemsPerPage).Project<Review, ReviewDto>(Mapper).ToListAsync(token);
+
+      if (totalReviews == 0)
+      {
+        return NotFound("No ratings found.");
+      }
+
+      if (page > ((totalReviews / itemsPerPage) + 1))
+      {
+        return BadRequest("Page doesn't exist");
+      }
+      var toSkip = itemsPerPage * (page - 1);
+
+      var result = new PagedResult<ReviewDto>
+      {
+        Results = pagedReviews,
+        Page = page,
+        TotalPages = (totalReviews / itemsPerPage) + 1,
+        TotalElements = totalReviews,
+      };
+
+      return Ok(result);
+    }
 
 
     [HttpPost("Add")]
