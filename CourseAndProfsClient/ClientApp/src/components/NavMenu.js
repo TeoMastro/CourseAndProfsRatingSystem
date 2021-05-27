@@ -19,10 +19,10 @@ export class NavMenu extends Component {
 
     render() {
         return (
-            <header>
+            <header className="head">
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
                     <Container>
-                        <NavbarBrand tag={Link} to="/">CourseAndProfsClient</NavbarBrand>
+                        <NavbarBrand style={{ color: 'white', fontWeight: 'bold'}} tag={Link} to="/">CourseAndProfsClient</NavbarBrand>
                         <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
                             <ul className="navbar-nav flex-grow">
@@ -36,7 +36,7 @@ export class NavMenu extends Component {
                                 {/*    <NavLink tag={Link} className="text-dark" to="/courses">Courses</NavLink>*/}
                                 {/*</NavItem>*/}
                                 <NavItem>
-                                    <NavLink className="text-dark"><a href="https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io">Login</a></NavLink>
+                                    <NavLink><a className="menulink" href="https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io">Login</a></NavLink>
                                 </NavItem>
                             </ul>
                         </Collapse>
