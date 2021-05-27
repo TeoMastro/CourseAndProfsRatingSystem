@@ -56,11 +56,9 @@ export class Home extends React.Component {
         this.handleChangeComments = this.handleChangeComments.bind(this);
     }
     getCode() {
-        console.log(this.state.flag);
         if (this.state.flag) {
             var link = window.location.href;
             this.state.code = link.slice(36, 61);
-            console.log(this.state.code);
             this.state.flag = false;
             this.state.usersname = 'Unauthorized';
             this.getToken(this.state.code);
@@ -69,7 +67,6 @@ export class Home extends React.Component {
     handleChangeProf(e) {
         this.setState({ selectValueProf: e.target.value });
         this.getCourses(e.target.value);
-        console.log("boo")
     }
     handleChangeCourse(e) {
         this.setState({ selectValueCourse: e.target.value });
@@ -96,7 +93,6 @@ export class Home extends React.Component {
         this.setState({ selectComments: e.target.value });
     }
     getRatings() {
-        console.log(this.state.isAuthorized);
         if (this.state.isAuthorized) {
             axios.get(`https://${window.location.host}/AllProfessorsReviews?itemsPerPage=20&page=1`)
                 .then(res => {
@@ -117,7 +113,6 @@ export class Home extends React.Component {
             .then(res => {
                 const profReviews = res.data.results;
                 this.setState({ profReviews });
-                console.log(profReviews);
             })
     }
     getCourses(arg) {
@@ -135,26 +130,18 @@ export class Home extends React.Component {
         params.append('code', code)
         axios.post('https://login.iee.ihu.gr/token', params)
             .then(res => {
-                console.log(res);
                 this.state.access_token = res.data.access_token
                 this.state.refresh_token = res.data.refresh_token
                 this.state.userid = res.data.user
-                console.log(this.state.access_token);
-                console.log(this.state.refresh_token);
-                console.log(this.state.userid);
                 this.getProfile(res.data.access_token);
             })
     }
     getProfile(ACCESS_TOKEN) {
         axios.get('https://api.iee.ihu.gr/profile', { headers: { 'x-access-token': ACCESS_TOKEN, 'content-type': 'application/json' } })
             .then(res => {
-                console.log(res);
                 this.state.usersname = res.data.cn;
                 this.state.usersam = res.data.uid;
                 this.state.userstitle = res.data.title;
-                console.log(this.state.usersname);
-                console.log(this.state.usersam);
-                console.log(this.state.userstitle);
                 this.addUpdateUser();
                 this.state.addYourReviewButtonText = 'Add your review';
                 this.state.isAuthorized = true;
@@ -165,6 +152,7 @@ export class Home extends React.Component {
         const token = this.state.access_token;
         axios.post(`https://${window.location.host}/api/user?id=${id}&token=${token}`)
             .then(res => {
+                console.log("Update users info");
                 console.log(res);
             })
     }
@@ -185,7 +173,6 @@ export class Home extends React.Component {
                 })
                 .catch(res => {
                     window.alert(res.response.data);
-                    console.log(res.response.data);
                 })
             this.getRatings();
         }
@@ -219,7 +206,6 @@ export class Home extends React.Component {
             closedR: false
         });
         this.getProfessorsReviews(row.id);
-        console.log(row);
     }
     myReviews() {
         var id = this.state.userid;
@@ -344,7 +330,7 @@ export class Home extends React.Component {
                         <h5 className='h51'>Logged in as {this.state.usersname}<br></br></h5>
                     </div>
                     <div>
-                        <LinkButton style={{ marginRight: 40 }}className='linbut1' onClick={() => this.myReviews()}>My reviews</LinkButton>
+                        <LinkButton style={{ marginRight: 40 }} className='linbut1' onClick={() => this.myReviews()}>My reviews</LinkButton>
                         <LinkButton className='linbut1' onClick={() => this.addReview()}>{this.state.addYourReviewButtonText}</LinkButton>
                     </div>
                 </div>

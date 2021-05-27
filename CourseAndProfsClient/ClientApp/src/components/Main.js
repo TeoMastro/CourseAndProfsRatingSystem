@@ -20,7 +20,8 @@ export class Main extends React.Component {
                 and the results will be public to all student society.
                 This way, students will now be able to create an impresion of 
                 each professor and their respective courses. Students can now know
-                what to anticipate before they enroll to each course.
+                what to anticipate before they enroll to each course.<br></br>
+                <a className="menulink" href="https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io">Login</a>
             </div>
         );
     }

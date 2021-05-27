@@ -12,11 +12,9 @@ export class Myreviews extends React.Component {
         }
     }
     getCode() {
-        console.log(this.state.flag);
         if (this.state.flag) {
             var link = window.location.href;
             this.state.appsid = link.slice(43, 47);
-            console.log(this.state.appsid);
             this.state.flag = false;
             this.getMyReviews(this.state.appsid);
         }
@@ -32,8 +30,8 @@ export class Myreviews extends React.Component {
         this.getCode();
         return (
             <div>
-                <h2>Courses</h2>
-                <DataGrid data={this.state.myReviews} style={{ height: 550, padding: '15' }}>
+                <h2>My reviews</h2>
+                <DataGrid data={this.state.myReviews} filterable columnResizing style={{ height: 550, padding: '15' }}>
                     <GridColumn field="reviewId" title="Id" hidden="true"></GridColumn>
                     <GridColumn field="professorName" title="Professor Name"  align="center"></GridColumn>
                     <GridColumn field="courseName" title="Course Name" align="center"></GridColumn>
