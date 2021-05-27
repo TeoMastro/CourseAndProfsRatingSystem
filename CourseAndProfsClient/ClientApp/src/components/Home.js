@@ -2,12 +2,14 @@
 import { DataGrid, GridColumn, Form, Dialog, Label, NumberBox, LinkButton } from 'rc-easyui';
 import axios from 'axios';
 import { get } from 'jquery';
+import { useHistory } from "react-router-dom";
 import './Home.css';
 export class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.getRatings(),
+            isAuthorized: false,
+            data: [],
             dataProfs: this.getProfessors(), 
             flag: true,
             profReviews: [],
@@ -45,8 +47,7 @@ export class Home extends React.Component {
             usersname: '',
             userstitle: '',
             usersam: '',
-            addYourReviewButtonText: 'Login to add your review',
-            isAuthorized: false
+            addYourReviewButtonText: 'Login to add your review'
         }
         this.handleChangeProf = this.handleChangeProf.bind(this);
         this.handleChangeCourse = this.handleChangeCourse.bind(this);
@@ -95,11 +96,14 @@ export class Home extends React.Component {
         this.setState({ selectComments: e.target.value });
     }
     getRatings() {
-        axios.get(`https://${window.location.host}/AllProfessorsReviews?itemsPerPage=20&page=1`)
-            .then(res => {
-                const reviews = res.data.results;
-                this.setState({ reviews });
-            })
+        console.log(this.state.isAuthorized);
+        if (this.state.isAuthorized) {
+            axios.get(`https://${window.location.host}/AllProfessorsReviews?itemsPerPage=20&page=1`)
+                .then(res => {
+                    const reviews = res.data.results;
+                    this.setState({ reviews });
+                })
+        }
     }
     getProfessors() {
         axios.get(`https://${window.location.host}/api/professor?itemsPerPage=20&page=1`)
@@ -217,6 +221,11 @@ export class Home extends React.Component {
         this.getProfessorsReviews(row.id);
         console.log(row);
     }
+    myReviews() {
+        var id = this.state.userid;
+        var link = "https://4f85f5d1d03c.ngrok.io/myreviews?id=" + id;
+        window.location.href = link;
+    }
     saveRow() {
         this.form.validate(() => {
             if (this.form.valid()) {
@@ -327,13 +336,15 @@ export class Home extends React.Component {
             this.setState({ value: null })
         }
         this.getCode();
+        this.state.data = this.getRatings();
         return (
             <div>
                 <div className='div1'>
                     <div >
-                        <h5 className='h51'>Loggen in as {this.state.usersname}<br></br></h5>
+                        <h5 className='h51'>Logged in as {this.state.usersname}<br></br></h5>
                     </div>
                     <div>
+                        <LinkButton style={{ marginRight: 40 }}className='linbut1' onClick={() => this.myReviews()}>My reviews</LinkButton>
                         <LinkButton className='linbut1' onClick={() => this.addReview()}>{this.state.addYourReviewButtonText}</LinkButton>
                     </div>
                 </div>
@@ -345,7 +356,7 @@ export class Home extends React.Component {
                     <GridColumn field="averageRating" title="Average rating" align="center" sortable
                         filterOperators={this.state.operators}
                         filter={() => <NumberBox></NumberBox>}></GridColumn>
-                    <GridColumn field="act" title="Actions" align="center" width={110}
+                    <GridColumn field="act" title="Reviews" align="center" width={110}
                         filter={() => <label></label>}
                         render={({ row }) => (
                             <div>

@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Professors } from './components/Professors';
-import { Courses } from './components/Courses';
+import { Myreviews } from './components/Myreviews';
 import { Login } from './components/Login';
 import './custom.css'
 export default class App extends Component {
@@ -13,7 +13,7 @@ export default class App extends Component {
             <Layout>
                 <Route exact path='/' component={Home} />
                 <Route path='/professors' component={Professors} />
-                <Route path='/courses' component={Courses} />
+                <Route path='/myreviews' component={Myreviews} />
                 <Route path='/login' component={Login} />
             </Layout>
         );
