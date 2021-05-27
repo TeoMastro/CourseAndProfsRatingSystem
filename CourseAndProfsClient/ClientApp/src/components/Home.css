@@ -1,4 +1,21 @@
-﻿.div1{
+﻿.homediv {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 100vw;
+    height: 93vh;
+    align-items:center;
+    justify-content:flex-start;
+}
+.homediv2 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 80vw;
+    height: 80vh;
+    margin-top: 5vh;
+}
+.div1{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -9,26 +26,26 @@
 }
 .h31 {
     font-family: Arial;
-    color: dodgerblue;
+    color: #1f3039;
     font-weight: bold;
 }
 .h51 {
     text-align: center;
     margin: 0px;
-    color: dodgerblue;
+    color: #1f3039;
 }
 .linbut1 {
     background-color: white;
     color: black;
-    border: 2px solid dodgerblue;
+    border: 2px solid #1f3039;
     padding: 1px 10px;
     box-shadow: 0px 1px 5px #888888;
 }
-.linbut1:hover {
-    background-color: dodgerblue;
-    color: white;
-    border: 2px solid dodgerblue;
-}
+    .linbut1:hover {
+        background-color: #1f3039;
+        color: white;
+        border: 2px solid #1f3039;
+    }
 .div2 {
     display: flex;
     flex-direction: row;
@@ -61,7 +78,7 @@
 }
 .texare1 {
     width: 250px;
-    background-color: dodgerblue;
+    background-color: #1f3039;
     color: white;
     font-family: Arial;
     padding: 4px;
@@ -69,35 +86,35 @@
 .texare2 {
     width: 100%;
     height: 120px;
-    background-color: dodgerblue;
+    background-color: #1f3039;
     color: white;
     font-family: Arial;
     padding: 4px;
     resize: none;
 }
 .dialog-button {
-    background-color: dodgerblue;
+    background-color: #1f3039;
     margin: 0px;
 }
 .linbut2 {
     font-family: Arial;
     background-color: white;
     color: black;
-    border: 2px solid dodgerblue;
+    border: 2px solid #1f3039;
     padding: 1px 10px;
 }
-.linbut2:hover {
-    background-color: dodgerblue;
-    color: white;
-    border: 2px solid white;
-}
+    .linbut2:hover {
+        background-color: #1f3039;
+        color: white;
+        border: 2px solid white;
+    }
 .popup1 {
     font-family: Arial;
     padding: 20px;
     margin: 0px;
 }
 .dial1 {
-    border: 2px solid dodgerblue;
+    border: 2px solid #1f3039;
     color: white;
     padding: 0px;
     width: 80%;
@@ -105,7 +122,7 @@
 .dagr1 {
     height: 550px;
     padding: 0px;
-    background-color: dodgerblue;
+    background-color: #1f3039;
     box-shadow: 0px 2px 10px #888888;
     color: white;
 }
@@ -113,12 +130,12 @@
     font-family: Arial;
     background-color: white;
     color: black;
-    border: 2px solid dodgerblue;
+    border: 2px solid #1f3039;
     padding: 1px 10px;
     margin: 5px;
 }
-.linbut3:hover {
-    background-color: dodgerblue;
-    color: white;
-    border: 2px solid white;
-}
+    .linbut3:hover {
+        background-color: #1f3039;
+        color: white;
+        border: 2px solid white;
+    }

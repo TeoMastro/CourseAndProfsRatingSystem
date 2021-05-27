@@ -186,7 +186,7 @@ export class Home extends React.Component {
             ? errors[name][0]
             : null;
     }
-    addReview(row) {
+    addReview() {
         if (this.state.isAuthorized) {
             this.setState({
                 model: Object.assign({}),
@@ -324,35 +324,37 @@ export class Home extends React.Component {
         this.getCode();
         this.state.data = this.getRatings();
         return (
-            <div>
-                <div className='div1'>
-                    <div >
-                        <h5 className='h51'>Logged in as {this.state.usersname}<br></br></h5>
+            <div className='homediv'>
+                <div className='homediv2'>
+                    <div className='div1'>
+                        <div >
+                            <h5 className='h51'>Logged in as {this.state.usersname}<br></br></h5>
+                        </div>
+                        <div>
+                            <LinkButton style={{ marginRight: 40 }} className='linbut1' onClick={() => this.myReviews()}>My reviews</LinkButton>
+                            <LinkButton className='linbut1' onClick={() => this.addReview()}>{this.state.addYourReviewButtonText}</LinkButton>
+                        </div>
                     </div>
-                    <div>
-                        <LinkButton style={{ marginRight: 40 }} className='linbut1' onClick={() => this.myReviews()}>My reviews</LinkButton>
-                        <LinkButton className='linbut1' onClick={() => this.addReview()}>{this.state.addYourReviewButtonText}</LinkButton>
-                    </div>
+                    <DataGrid className="dagr1" data={this.state.reviews} filterable columnMoving multiSort columnResizing>
+                        <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
+                        <GridColumn field="fullName" title="Name" align="center" sortable></GridColumn>
+                        <GridColumn field="mail" title="Mail" align="center" sortable></GridColumn>
+                        <GridColumn field="department" title="Department" align="center" sortable></GridColumn>
+                        <GridColumn field="averageRating" title="Average rating" align="center" sortable
+                            filterOperators={this.state.operators}
+                            filter={() => <NumberBox></NumberBox>}></GridColumn>
+                        <GridColumn field="act" title="Reviews" align="center" width={110}
+                            filter={() => <label></label>}
+                            render={({ row }) => (
+                                <div>
+                                    <LinkButton className="linbut3" onClick={() => this.readReviews(row)}>Reviews</LinkButton>
+                                </div>
+                            )}
+                        />
+                    </DataGrid>
+                    {this.renderDialog()}
+                    {this.renderReviews()}
                 </div>
-                <DataGrid className="dagr1" data={this.state.reviews} filterable columnMoving multiSort columnResizing>
-                    <GridColumn field="id" title="PrID" hidden="true"></GridColumn>
-                    <GridColumn field="fullName" title="Name" align="center" sortable></GridColumn>
-                    <GridColumn field="mail" title="Mail" align="center" sortable></GridColumn>
-                    <GridColumn field="department" title="Department" align="center" sortable></GridColumn>
-                    <GridColumn field="averageRating" title="Average rating" align="center" sortable
-                        filterOperators={this.state.operators}
-                        filter={() => <NumberBox></NumberBox>}></GridColumn>
-                    <GridColumn field="act" title="Reviews" align="center" width={110}
-                        filter={() => <label></label>}
-                        render={({ row }) => (
-                            <div>
-                                <LinkButton className="linbut3" onClick={() => this.readReviews(row)}>Reviews</LinkButton>
-                            </div>
-                        )}
-                    />
-                </DataGrid>
-                {this.renderDialog()}
-                {this.renderReviews()}
             </div>
         );
     }
