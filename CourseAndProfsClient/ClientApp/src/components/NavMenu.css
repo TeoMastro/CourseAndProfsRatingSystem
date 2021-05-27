@@ -1,22 +1,14 @@
 ﻿@import '~rc-easyui/dist/themes/default/easyui.css';
 @import '~rc-easyui/dist/themes/icon.css';
 @import '~rc-easyui/dist/themes/react.css';
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-    background-color: dodgerblue;
-    text-shadow: 2px 2px 4px #000000;
-}
 html {
     font-size: 14px;
 }
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
 .head {
-    background-color: dodgerblue;
-    box-shadow: 0px 2px 20px #888888;
+    background-color: #283e4a;
+    margin: 0;
+    height: 7vh;
+    padding: 0;
 }
 .menulink {
     color: white;
@@ -28,8 +20,20 @@ html {
     text-decoration: none;
     text-shadow: 2px 2px 4px #000000;
 }
-.mr-2 {
-    background-color: white;
+.brandnav {
+    font-weight: bold;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    background-color: #1f3039;
+    text-shadow: 2px 2px 4px #000000;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+    margin: 0px;
+    height: 7vh;
+    vertical-align:central;
 }
 @media (min-width: 768px) {
     html {
