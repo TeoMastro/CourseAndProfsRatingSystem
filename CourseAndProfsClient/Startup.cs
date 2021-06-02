@@ -171,6 +171,18 @@ namespace CourseAndProfsClient
 
       app.UseRouting();
 
+      app.UseReDoc(c =>
+      {
+        c.RoutePrefix = "docs";
+        c.DocumentTitle = "Course And Professors Rating System v1";
+        c.SpecUrl("/swagger/v1/swagger.json");
+        c.ExpandResponses("none");
+        c.RequiredPropsFirst();
+        c.SortPropsAlphabetically();
+        c.HideDownloadButton();
+        c.HideHostname();
+      });
+
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllerRoute(
