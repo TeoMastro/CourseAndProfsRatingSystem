@@ -39,6 +39,7 @@ using CourseAndProfsPersistence.Identity;
 using CourseAndProfsPersistence;
 using System;
 using CourseAndProfsClient.Helpers;
+using Serilog;
 
 namespace CourseAndProfsClient
 {
@@ -181,6 +182,11 @@ namespace CourseAndProfsClient
         c.SortPropsAlphabetically();
         c.HideDownloadButton();
         c.HideHostname();
+      });
+
+      app.UseSerilogIngestion(x =>
+      {
+        x.ClientLevelSwitch = Program.LevelSwitch;
       });
 
       app.UseEndpoints(endpoints =>
