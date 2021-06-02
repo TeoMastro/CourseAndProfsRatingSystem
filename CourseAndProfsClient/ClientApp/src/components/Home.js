@@ -58,7 +58,7 @@ export class Home extends React.Component {
     getCode() {
         if (this.state.flag) {
             var link = window.location.href;
-            this.state.code = link.slice(36, 61);
+            this.state.code = link.slice(47, 72);
             this.state.flag = false;
             this.state.usersname = 'Unauthorized';
             this.getToken(this.state.code);
