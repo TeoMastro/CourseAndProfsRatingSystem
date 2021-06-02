@@ -14,7 +14,7 @@ export class Main extends React.Component {
                 each professor and their respective courses. Students can now know
                 what to anticipate before they enroll to each course.<br></br>
                 </p>
-                <LinkButton className="mainlink" href="https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io">Login</LinkButton>
+                <LinkButton className="mainlink" href="https://login.it.teithe.gr/authorization/?client_id=60b80e0992f09141fabd0260&response_type=code&scope=profile&redirect_uri=https://courseandprofs.azurewebsites.net">Login</LinkButton>
             </div>
         );
     }

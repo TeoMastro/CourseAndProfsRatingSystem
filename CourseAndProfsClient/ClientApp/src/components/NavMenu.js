@@ -27,7 +27,7 @@ export class NavMenu extends Component {
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
                             <ul className="navbar-nav flex-grow">
                                 {/*<NavItem>*/}
-                                {/*    <NavLink><a className="menulink" href="https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io">Login</a></NavLink>*/}
+                                {/*    <NavLink><a className="menulink" href="https://login.it.teithe.gr/authorization/?client_id=60b80e0992f09141fabd0260&response_type=code&scope=profile&redirect_uri=https://courseandprofs.azurewebsites.net">Login</a></NavLink>*/}
                                 {/*</NavItem>*/}
                             </ul>
                         </Collapse>

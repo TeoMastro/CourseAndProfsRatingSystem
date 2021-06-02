@@ -124,8 +124,8 @@ export class Home extends React.Component {
     }
     getToken(code) {
         const params = new URLSearchParams();
-        params.append('client_id', '60ad121a0c09d102ca99dffc')
-        params.append('client_secret', '4q8c965a891hdt17jvhceh2obclu69nco4ep3mols1l1s0nlvg')
+        params.append('client_id', '60b80e0992f09141fabd0260')
+        params.append('client_secret', '5fppkotl3chk7fi7xxk8drp1zjtanhmzdsmaj6axbjtw8pwqqf')
         params.append('grant_type', 'authorization_code')
         params.append('code', code)
         axios.post('https://login.iee.ihu.gr/token', params)
@@ -195,7 +195,7 @@ export class Home extends React.Component {
             });
         }
         else {
-            window.open("https://login.it.teithe.gr/authorization/?client_id=60ad121a0c09d102ca99dffc&response_type=code&scope=profile&redirect_uri=https://4f85f5d1d03c.ngrok.io", "_self");
+            window.open("https://login.it.teithe.gr/authorization/?client_id=60b80e0992f09141fabd0260&response_type=code&scope=profile&redirect_uri=https://courseandprofs.azurewebsites.net", "_self");
         }
     }
     readReviews(row) {
@@ -209,7 +209,7 @@ export class Home extends React.Component {
     }
     myReviews() {
         var id = this.state.userid;
-        var link = "https://4f85f5d1d03c.ngrok.io/myreviews?id=" + id;
+        var link = "https://courseandprofs.azurewebsites.net/myreviews?id=" + id;
         window.location.href = link;
     }
     saveRow() {
