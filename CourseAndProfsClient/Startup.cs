@@ -142,29 +142,29 @@ namespace CourseAndProfsClient
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       app.UseSwagger();
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
+      //if (env.IsDevelopment())
+      //{
+      app.UseDeveloperExceptionPage();
 
-        app.UseMigrationsEndPoint();
-        app.UseSwaggerUI(c =>
-        {
-          c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseAndProfs.Web.Api v1");
-          c.DocumentTitle = "CourseAndProfs API";
-          c.DocExpansion(DocExpansion.None);
-          c.EnableDeepLinking();
-          c.EnableFilter();
-          c.EnableValidator();
-          c.DisplayOperationId();
-          c.DisplayRequestDuration();
-        });
-      }
-      else
+      app.UseMigrationsEndPoint();
+      app.UseSwaggerUI(c =>
       {
-        app.UseExceptionHandler("/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
-      }
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseAndProfs.Web.Api v1");
+        c.DocumentTitle = "CourseAndProfs API";
+        c.DocExpansion(DocExpansion.None);
+        c.EnableDeepLinking();
+        c.EnableFilter();
+        c.EnableValidator();
+        c.DisplayOperationId();
+        c.DisplayRequestDuration();
+      });
+      //}
+      //else
+      //{
+      //  app.UseExceptionHandler("/Error");
+      //  // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+      //  app.UseHsts();
+      //}
 
       app.UseHttpsRedirection();
       app.UseStaticFiles();
