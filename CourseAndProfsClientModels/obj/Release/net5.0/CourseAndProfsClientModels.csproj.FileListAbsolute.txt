@@ -1,0 +1,15 @@
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Release\net5.0\CourseAndProfsClientModels.deps.json
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Release\net5.0\CourseAndProfsClientModels.dll
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Release\net5.0\ref\CourseAndProfsClientModels.dll
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Release\net5.0\CourseAndProfsClientModels.pdb
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Release\net5.0\CourseAndProfsPersistence.dll
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Release\net5.0\CourseAndProfsPersistence.pdb
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.csprojAssemblyReference.cache
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.AssemblyInfoInputs.cache
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.AssemblyInfo.cs
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.csproj.CoreCompileInputs.cache
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.csproj.CopyComplete
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.dll
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\ref\CourseAndProfsClientModels.dll
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Release\net5.0\CourseAndProfsClientModels.pdb
