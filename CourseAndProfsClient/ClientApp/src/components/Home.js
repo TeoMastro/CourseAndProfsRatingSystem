@@ -343,6 +343,7 @@ export class Home extends React.Component {
                         <GridColumn field="averageRating" title="Average rating" align="center" sortable
                             filterOperators={this.state.operators}
                             filter={() => <NumberBox></NumberBox>}></GridColumn>
+                        <GridColumn field="totalReviews" title="Total Reviews" align="center" sortable></GridColumn>
                         <GridColumn field="act" title="Reviews" align="center" width={110}
                             filter={() => <label></label>}
                             render={({ row }) => (

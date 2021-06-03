@@ -15,7 +15,7 @@ namespace CourseAndProfsClient.Helpers
   public static class MappingConfiguration
   {
     public static readonly IPureMapperConfig Mapping = new PureMapperConfig()
-      .Map<Professor, ProfessorDto>(mapper => professor => new ProfessorDto() { Id = professor.Id, FullName = professor.FullName, Mail = professor.Mail, Office = professor.Office, EOffice = professor.EOffice, Phone = professor.Phone, AverageRating = professor.AverageRating , Department =  professor.Department })
+      .Map<Professor, ProfessorDto>(mapper => professor => new ProfessorDto() { Id = professor.Id, FullName = professor.FullName, Mail = professor.Mail, Office = professor.Office, EOffice = professor.EOffice, Phone = professor.Phone, AverageRating = professor.AverageRating , Department =  professor.Department, TotalReviews = professor.TotalReviews })
       .Map<ProfessorDto, Professor>(mapper => professorDto => new Professor() { Id = professorDto.Id, FullName = professorDto.FullName, Mail = professorDto.Mail, Office = professorDto.Office, EOffice = professorDto.EOffice, Phone = professorDto.Phone })
       .Map<AddProfessorDto, Professor>(mapper => addProfessorDto => new Professor() { FullName = addProfessorDto.FullName, Mail = addProfessorDto.Mail, Office = addProfessorDto.Office, EOffice = addProfessorDto.EOffice, Phone = addProfessorDto.Phone })
       .Map<Course, CourseDto>(mapper => course => new CourseDto() { Id = course.Id, Name = course.Name, Type = course.Type})

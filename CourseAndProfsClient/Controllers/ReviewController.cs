@@ -191,6 +191,8 @@ namespace CourseAndProfsClient.Controllers
       }
 
       professor.AverageRating = (professor.Reviews.Sum(x => x.Rating) + dto.Rating) / (professor.Reviews.Count + 1);
+      professor.TotalReviews += 1;
+
       var review = new Review
       {
         Course = course,
@@ -230,10 +232,12 @@ namespace CourseAndProfsClient.Controllers
       if (!double.IsFinite(result))
       {
         review.Professor.AverageRating = 0;
+        review.Professor.TotalReviews = 0;
       }
       else
       {
         review.Professor.AverageRating = result;
+        review.Professor.TotalReviews -= 1;
       }
       Context.Reviews.Remove(review);
       await Context.SaveChangesAsync(token);
