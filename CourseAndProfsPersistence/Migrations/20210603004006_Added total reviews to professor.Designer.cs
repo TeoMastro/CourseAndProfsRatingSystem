@@ -3,15 +3,17 @@ using System;
 using CourseAndProfsPersistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CourseAndProfsPersistence.Migrations
 {
     [DbContext(typeof(CaPDbContext))]
-    partial class CaPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210603004006_Added total reviews to professor")]
+    partial class Addedtotalreviewstoprofessor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
