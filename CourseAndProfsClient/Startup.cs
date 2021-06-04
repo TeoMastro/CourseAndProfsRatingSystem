@@ -84,7 +84,7 @@ namespace CourseAndProfsClient
 
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseAndProfs.Web.Api", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseAndProfsClient.Api", Version = "v1" });
         c.DescribeAllParametersInCamelCase();
         c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
         c.IncludeXmlComments(Path.Combine(
@@ -125,7 +125,7 @@ namespace CourseAndProfsClient
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app)
     {
       app.UseSwagger();
       if (Environment.IsDevelopment() || Environment.IsProduction() || Environment.IsStaging())
@@ -134,7 +134,7 @@ namespace CourseAndProfsClient
         app.UseMigrationsEndPoint();
         app.UseSwaggerUI(c =>
         {
-          c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseAndProfs.Web.Api v1");
+          c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseAndProfsClient.Api v1");
           c.DocumentTitle = "CourseAndProfs API";
           c.DocExpansion(DocExpansion.None);
           c.EnableDeepLinking();
@@ -185,7 +185,7 @@ namespace CourseAndProfsClient
       {
         spa.Options.SourcePath = "ClientApp";
 
-        if (env.IsDevelopment())
+        if (Environment.IsDevelopment() || Environment.IsProduction())
         {
           spa.UseReactDevelopmentServer(npmScript: "start");
         }
