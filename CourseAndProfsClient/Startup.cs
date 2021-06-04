@@ -128,30 +128,21 @@ namespace CourseAndProfsClient
     public void Configure(IApplicationBuilder app)
     {
       app.UseSwagger();
-      if (Environment.IsDevelopment() || Environment.IsProduction() || Environment.IsStaging())
+      app.UseSwaggerUI(c =>
       {
-        app.UseDeveloperExceptionPage();
-        app.UseMigrationsEndPoint();
-        app.UseSwaggerUI(c =>
-        {
-          c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseAndProfsClient.Api v1");
-          c.DocumentTitle = "CourseAndProfs API";
-          c.DocExpansion(DocExpansion.None);
-          c.EnableDeepLinking();
-          c.EnableFilter();
-          c.EnableValidator();
-          c.DisplayOperationId();
-          c.DisplayRequestDuration();
-        });
-      }
-      else
-      {
-        app.UseExceptionHandler("/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
-      }
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CourseAndProfsClient.Api v1");
+        c.DocumentTitle = "CourseAndProfs API";
+        c.DocExpansion(DocExpansion.None);
+        c.EnableDeepLinking();
+        c.EnableFilter();
+        c.EnableValidator();
+        c.DisplayOperationId();
+        c.DisplayRequestDuration();
+      });
+      app.UseDeveloperExceptionPage();
+      app.UseMigrationsEndPoint();
 
-  app.UseHttpsRedirection();
+      app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseSpaStaticFiles();
 
