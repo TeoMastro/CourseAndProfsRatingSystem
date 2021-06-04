@@ -27,7 +27,12 @@
     {
     }
 
-
+    /// <summary>
+    /// Inserts or Updates an AppsId with the given AppsToken.
+    /// </summary>
+    /// <param name="id">Professor's ID.</param>
+    /// <param name="token">Professor's ID.</param>
+    /// <response code="200"></response>
     [HttpPost("")]
     public async Task<ActionResult> AddUsersCredentials(long id, string token)
     {

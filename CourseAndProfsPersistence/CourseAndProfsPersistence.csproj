@@ -4,6 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsPersistence\CourseAndProfsPersistence.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Kritikos.Configuration.Peristence.IdentityServer" Version="1.1.1" />
     <PackageReference Include="Kritikos.Configuration.Persistence" Version="1.1.1" />

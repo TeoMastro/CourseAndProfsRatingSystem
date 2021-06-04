@@ -33,6 +33,7 @@
     /// <param name="itemsPerPage">Define how many items shall be returned. </param>
     /// <param name="page">Choose which page of the results shall be returned.</param>
     /// <returns>Returns a list of Professors.</returns>
+    /// <response code="200">Ok results.</response>
     [HttpGet("")]
     public async Task<ActionResult<List<ProfessorDto>>> GetProfessors(int itemsPerPage = 20, int page = 1)
     {
@@ -70,6 +71,7 @@
     /// </summary>
     /// <param name="id">Professor's ID.</param>
     /// <returns>One single Professor.</returns>
+    /// <response code="200">Ok.</response>
     /// <response code="400">Professor was not found.</response>
     [HttpGet("{id}")]
     public ActionResult<ProfessorDto> GetProfessor(long id)
@@ -88,11 +90,13 @@
     }
 
     /// <summary>
-    /// Returns an professor provided an ID.
+    /// Returns all joined courses for a ProfId.
     /// </summary>
     /// <param name="id">Professor's ID.</param>
     /// <returns>One Professor's Courses.</returns>
-    /// <response code="400">Professor was not found.</response>
+    /// <response code="200">Ok results.</response>
+    /// <response code="404">Professor was not found.</response>
+    /// <response code="404">Courses were not found.</response>
     [HttpGet("professorscourses/{id}")]
     public ActionResult<ProfessorDto> GetProfessorsCourses(long id)
     {
@@ -139,12 +143,13 @@
     }
 
     /// <summary>
-    /// Adds an professor provided the necessary information.
+    /// Adds an professor-course Join.
     /// </summary>
     /// <param name="profId"></param>
     /// <param name="courseId"></param> W
     /// <response code="200">Added successfully.</response>
-    /// <response code="400">Professor was not found.</response>
+    /// <response code="404">Professor was not found.</response>
+    /// <response code="404">Course was not found.</response>
     [HttpPost("join")]
     public async Task<ActionResult<ProfessorDto>> AddProfessorCourseJoin(long profId, long courseId)
     {
@@ -168,10 +173,12 @@
     }
 
     /// <summary>
-    /// We delete a user provided an ID.
+    /// We delete a Professor provided an ID.
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>No content.</returns>
+    /// <response code="204">Deleted successfully.</response>
+    /// <response code="404">Professor was not found.</response>
     [HttpDelete("")]
     public async Task<ActionResult> DeleteProfessor(int id)
     {
@@ -196,7 +203,9 @@
     /// </summary>
     /// <param name="id"></param>
     /// <param name="dto"></param>
-    /// <returns></returns>
+    /// <returns>Ok professor</returns>
+    /// <response code="200">Ok.</response>
+    /// <response code="404">Professor was not found.</response>
     [HttpPut("{id}")]
     public async Task<ActionResult<ProfessorDto>> UpdateProfessor(int id, AddProfessorDto dto)
     {

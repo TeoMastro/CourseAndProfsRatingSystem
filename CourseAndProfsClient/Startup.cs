@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System.Reflection;
+
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
@@ -82,28 +85,11 @@ namespace CourseAndProfsClient
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "CourseAndProfs.Web.Api", Version = "v1" });
-        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-          Name = "Authorization",
-          Type = SecuritySchemeType.ApiKey,
-          Scheme = "Bearer",
-          BearerFormat = "JWT",
-          In = ParameterLocation.Header,
-          Description =
-            "Enter 'Bearer' [space] and then your valid Token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
-        });
-        c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-          {
-            new OpenApiSecurityScheme
-            {
-              Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer", },
-            },
-            Array.Empty<string>()
-          },
-        });
         c.DescribeAllParametersInCamelCase();
         c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+        c.IncludeXmlComments(Path.Combine(
+          AppContext.BaseDirectory,
+          $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
       });
 
 

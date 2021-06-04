@@ -43,3 +43,5 @@ C:\Users\Dimitris Gavriilidis\Source\Repos\CourseAndProfsRatingSystem\CourseAndP
 C:\Users\Dimitris Gavriilidis\Source\Repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Debug\net5.0\CourseAndProfsClientModels.dll
 C:\Users\Dimitris Gavriilidis\Source\Repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Debug\net5.0\ref\CourseAndProfsClientModels.dll
 C:\Users\Dimitris Gavriilidis\Source\Repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\obj\Debug\net5.0\CourseAndProfsClientModels.pdb
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Debug\net5.0\CourseAndProfsClientModels.xml
+C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClientModels\bin\Debug\net5.0\CourseAndProfsPersistence.xml

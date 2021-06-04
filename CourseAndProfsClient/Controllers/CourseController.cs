@@ -32,6 +32,7 @@
     /// <param name="itemsPerPage">Define how many items shall be returned. </param>
     /// <param name="page">Choose which page of the results shall be returned.</param>
     /// <returns>Returns a list of Courses.</returns>
+    /// <response code="200">Ok.</response>
     [HttpGet("")]
     public async Task<ActionResult<List<CourseDto>>> GetCourses(int itemsPerPage = 20, int page = 1)
     {
@@ -65,11 +66,12 @@
     }
 
     /// <summary>
-    /// Returns an course provided an ID.
+    /// Returns a course provided an ID.
     /// </summary>
     /// <param name="id">Course's ID.</param>
     /// <returns>One single Course.</returns>
-    /// <response code="400">Course was not found.</response>
+    /// <response code="200">Ok.</response>
+    /// <response code="404">Course was not found.</response>
     [HttpGet("{id}")]
     public ActionResult<CourseDto> GetCourse(long id)
     {
@@ -87,7 +89,7 @@
     }
 
     /// <summary>
-    /// Adds an course provided the necessary information.
+    /// Adds a course provided the necessary information.
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
@@ -105,10 +107,12 @@
     }
 
     /// <summary>
-    /// We delete a user provided an ID.
+    /// We delete a course provided an ID.
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>No Content.</returns>
+    /// <response code="204">Deleted successfully.</response>
+    /// <response code="404">Course was not found.</response>
     [HttpDelete("")]
     public async Task<ActionResult> DeleteCourse(int id)
     {
@@ -134,6 +138,8 @@
     /// <param name="id"></param>
     /// <param name="dto"></param>
     /// <returns></returns>
+    /// <response code="200">Ok.</response>
+    /// <response code="404">Course was not found.</response>
     [HttpPut("{id}")]
     public async Task<ActionResult<CourseDto>> UpdateCourse(int id, AddCourseDto dto)
     {

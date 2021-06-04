@@ -10,6 +10,10 @@
     <UserSecretsId>74b54360-cdde-4435-b2be-6d82ec7f8c30</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\vagmark\source\repos\CourseAndProfsRatingSystem\CourseAndProfsClient\CourseAndProfsClient.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Kritikos.Configuration.Peristence.IdentityServer" Version="1.1.1" />
     <PackageReference Include="Kritikos.Extensions.Linq" Version="0.1.7" />
