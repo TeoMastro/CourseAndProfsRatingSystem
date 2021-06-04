@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CourseAndProfsClient</name>
+    </assembly>
+    <members>
+        <member name="M:CourseAndProfsClient.Controllers.CourseController.GetCourses(System.Int32,System.Int32)">
+            <summary>
+            Returns all courses. You can pass parameters to handle page and result count.
+            </summary>
+            <param name="itemsPerPage">Define how many items shall be returned. </param>
+            <param name="page">Choose which page of the results shall be returned.</param>
+            <returns>Returns a list of Courses.</returns>
+            <response code="200">Ok.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.CourseController.GetCourse(System.Int64)">
+            <summary>
+            Returns a course provided an ID.
+            </summary>
+            <param name="id">Course's ID.</param>
+            <returns>One single Course.</returns>
+            <response code="200">Ok.</response>
+            <response code="404">Course was not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.CourseController.AddCourse(CourseAndProfsClientModels.AddCourseDto)">
+            <summary>
+            Adds a course provided the necessary information.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.CourseController.DeleteCourse(System.Int32)">
+            <summary>
+            We delete a course provided an ID.
+            </summary>
+            <param name="id"></param>
+            <returns>No Content.</returns>
+            <response code="204">Deleted successfully.</response>
+            <response code="404">Course was not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.CourseController.UpdateCourse(System.Int32,CourseAndProfsClientModels.AddCourseDto)">
+            <summary>
+            We update an Course provided all the necessary information. Id is required.
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns></returns>
+            <response code="200">Ok.</response>
+            <response code="404">Course was not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ProfessorsController.GetProfessors(System.Int32,System.Int32)">
+            <summary>
+            Returns all professors. You can pass parameters to handle page and result count.
+            </summary>
+            <param name="itemsPerPage">Define how many items shall be returned. </param>
+            <param name="page">Choose which page of the results shall be returned.</param>
+            <returns>Returns a list of Professors.</returns>
+            <response code="200">Ok results.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ProfessorsController.GetProfessor(System.Int64)">
+            <summary>
+            Returns an professor provided an ID.
+            </summary>
+            <param name="id">Professor's ID.</param>
+            <returns>One single Professor.</returns>
+            <response code="200">Ok.</response>
+            <response code="400">Professor was not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ProfessorsController.GetProfessorsCourses(System.Int64)">
+            <summary>
+            Returns all joined courses for a ProfId.
+            </summary>
+            <param name="id">Professor's ID.</param>
+            <returns>One Professor's Courses.</returns>
+            <response code="200">Ok results.</response>
+            <response code="404">Professor was not found.</response>
+            <response code="404">Courses were not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ProfessorsController.AddProfessor(CourseAndProfsClientModels.AddProfessorDto)">
+            <summary>
+            Adds an professor provided the necessary information.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ProfessorsController.AddProfessorCourseJoin(System.Int64,System.Int64)">
+            <summary>
+            Adds an professor-course Join.
+            </summary>
+            <param name="profId"></param>
+            <param name="courseId"></param> W
+            <response code="200">Added successfully.</response>
+            <response code="404">Professor was not found.</response>
+            <response code="404">Course was not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ProfessorsController.DeleteProfessor(System.Int32)">
+            <summary>
+            We delete a Professor provided an ID.
+            </summary>
+            <param name="id"></param>
+            <returns>No content.</returns>
+            <response code="204">Deleted successfully.</response>
+            <response code="404">Professor was not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ProfessorsController.UpdateProfessor(System.Int32,CourseAndProfsClientModels.AddProfessorDto)">
+            <summary>
+            We update an Professor provided all the necessary information. Id is required.
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns>Ok professor</returns>
+            <response code="200">Ok.</response>
+            <response code="404">Professor was not found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ReviewController.GetAllProfessorsAvgReviews(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Returns all professors with OrderByDescending. You can pass parameters to handle page and result count.
+            </summary>
+            <param name="itemsPerPage">Define how many items shall be returned. </param>
+            <param name="page">Choose which page of the results shall be returned.</param>
+            <returns>Returns a list of Professors.</returns>
+            <response code="200">Results.</response>
+            <response code="404">No rating was found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ReviewController.GetProfessorsReviews(System.Int64,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Returns paged reviews for a specific ProfId.
+            </summary>
+            <param name="profId">Professor's ID.</param>
+            <returns>Listed paged reviews.</returns>
+            <response code="200">Reviews.</response>
+            <response code="404">No rating was found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ReviewController.GetStudentsReviews(System.Int64,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Returns paged reviews made by an AppsId.
+            </summary>
+            <param name="appsId">Professor's ID.</param>
+            <returns>Listed paged reviews.</returns>
+            <response code="200">Reviews.</response>
+            <response code="404">No rating was found.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ReviewController.AddReview(CourseAndProfsClientModels.Dto.AddReviewDto,System.Threading.CancellationToken)">
+            <summary>
+            Adds a review given the specified params.
+            </summary>
+            <param name="dto">Professor's ID.</param>
+            <returns>Listed paged reviews.</returns>
+            <response code="200">Review was added successufully.</response>
+            <response code="400">Unauthorized.</response>
+            <response code="404">Not found profId.</response>
+            <response code="404">Not found courseId.</response>
+            <response code="409">User has already reviewed this professor and course.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.ReviewController.RemoveReview(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Removes  a review given the reviewId.
+            </summary>
+            <param name="reviewId">Professor's ID.</param>
+            <returns>Listed paged reviews.</returns>
+            <response code="204">Review was added successufully.</response>
+            <response code="404">Not found reviewId.</response>
+        </member>
+        <member name="M:CourseAndProfsClient.Controllers.UserController.AddUsersCredentials(System.Int64,System.String)">
+            <summary>
+            Inserts or Updates an AppsId with the given AppsToken.
+            </summary>
+            <param name="id">Professor's ID.</param>
+            <param name="token">Professor's ID.</param>
+            <response code="200"></response>
+        </member>
+    </members>
+</doc>
