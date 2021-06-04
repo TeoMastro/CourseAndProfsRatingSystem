@@ -128,7 +128,7 @@ namespace CourseAndProfsClient
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       app.UseSwagger();
-      if (env.IsDevelopment() || env.IsProduction() || env.IsStaging())
+      if (Environment.IsDevelopment() || Environment.IsProduction() || Environment.IsStaging())
       {
         app.UseDeveloperExceptionPage();
         app.UseMigrationsEndPoint();
