@@ -1,35 +1,59 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
-using Serilog;
-using Serilog.Core;
-using Serilog.Extensions.Logging;
-using Microsoft.ApplicationInsights.Extensibility;
+using CourseAndProfsClient.Helpers;
+using CourseAndProfsClient.Helpers.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog.Core;
 using Microsoft.Extensions.Logging.Abstractions;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 namespace CourseAndProfsClient
 {
-  public class Program
-  {
-    internal static readonly LoggingLevelSwitch LevelSwitch = new();
+	public static class Program
+	{
+		internal static readonly LoggingLevelSwitch LevelSwitch = new();
+		private static Microsoft.Extensions.Logging.ILogger logger = new NullLogger<Startup>();
 
-    public static void Main(string[] args)
-    {
+		public static async Task Main(string[] args)
+		{
+			Log.Logger = new LoggerConfiguration()
+				.CreateStartupLogger()
+				.CreateBootstrapLogger();
 
-      CreateHostBuilder(args).Build().Run();
-    }
+			using var loggerProvider = new SerilogLoggerProvider();
+			logger = loggerProvider.CreateLogger(nameof(Startup));
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-              webBuilder.UseStartup<Startup>();
-            });
-  }
+			try
+			{
+				var host = CreateHostBuilder(args).Build();
+				logger = host.Services.GetRequiredService<ILogger<Startup>>();
+
+				await host.RunAsync();
+			}
+			catch (Exception e)
+			{
+				logger.LogCritical(e, LogTemplates.BootstrappingError, e.Message);
+			}
+			finally
+			{
+				Log.CloseAndFlush();
+			}
+		}
+
+		public static IHostBuilder CreateHostBuilder(string[] args) =>
+			Host.CreateDefaultBuilder(args)
+				.UseSerilog((_, services, configuration) => configuration
+					.ConfigureLogger(
+						services.GetRequiredService<IConfiguration>(),
+						services.GetRequiredService<IWebHostEnvironment>()))
+				.ConfigureWebHostDefaults(webBuilder =>
+				{
+					webBuilder.UseStartup<Startup>();
+				});
+	}
 }
