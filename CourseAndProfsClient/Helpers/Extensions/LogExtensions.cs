@@ -14,6 +14,7 @@ namespace CourseAndProfsClient.Helpers.Extensions
 {
 	public static class LogExtensions
 	{
+		public const string logSC = "SourceContext = 'Microsoft.Hosting.Lifetime' or SourceContext = 'Microsoft.EntityFrameworkCore.Database.Command' or SourceContext = 'Serilog.AspNetCore.RequestLoggingMiddleware' or SourceContext = 'IdentityServer4.Hosting.IdentityServerMiddleware'";
 		public static LoggerConfiguration CreateStartupLogger(this LoggerConfiguration logConfiguration)
 			=> logConfiguration
 				   .MinimumLevel.Verbose()
@@ -47,7 +48,7 @@ namespace CourseAndProfsClient.Helpers.Extensions
 				.Enrich.WithProperty("Environment", environment.EnvironmentName)
 				.WriteTo.Logger(log => log
 					.MinimumLevel.ControlledBy(Program.LevelSwitch)
-					.Filter.ByExcluding(configuration["Serilog:Seq:Ignored"])
+					.Filter.ByExcluding(logSC)
 					.WriteTo.File(
 						configuration.GetValue("AzureDeployment", false)
 							? $@"D:\home\LogFiles\Application\{environment.ApplicationName}.txt"
