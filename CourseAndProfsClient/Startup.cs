@@ -176,7 +176,7 @@ namespace CourseAndProfsClient
       {
         spa.Options.SourcePath = "ClientApp";
 
-        if (Environment.IsDevelopment() || Environment.IsProduction())
+        if (Environment.IsDevelopment() && !Configuration.GetValue("AzureDeployment", false))
         {
           spa.UseReactDevelopmentServer(npmScript: "start");
         }
