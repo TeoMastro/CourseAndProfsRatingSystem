@@ -1,4 +1,16 @@
 # Working on a rating system for iee ihu
+
+
+## [Documentation][docs]
+
+## [API][api]
+
+## [Live Environment][prod]
+
+
+[docs]: https://courseandprofs.azurewebsites.net/docs/index.html
+[api]: https://courseandprofs.azurewebsites.net/swagger/index.html
+[prod]: https://ieemdb-dev.azurewebsites.net/
 ```
 Home
 ```
