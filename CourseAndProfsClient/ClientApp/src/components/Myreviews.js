@@ -15,7 +15,9 @@ export class Myreviews extends React.Component {
     getCode() {
         if (this.state.flag) {
             var link = window.location.href;
-            this.state.appsid = link.slice(43, 47);
+            this.state.appsid = link.slice(54, 58);
+            console.log(link);
+            console.log(this.state.appsid);
             this.state.flag = false;
             this.getMyReviews(this.state.appsid);
         }
